@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "1053540422169",
+    "project_id": "vib-database",
+    "storage_bucket": "vib-database.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1053540422169:android:64f183c104dc8b794c9088",
+        "android_client_info": {
+          "package_name": "com.example.backend"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1053540422169-lr58368251nbf610pkdekjdrm8dpigji.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDIcyC5kKwiK3hsed4NaxEj6Z82fY9Dhuc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1053540422169-lr58368251nbf610pkdekjdrm8dpigji.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1053540422169-nsfauftq245638opghocoknd40i6m6l2.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.backend"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
