@@ -5,12 +5,12 @@ class Body extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Column(
-      children: const [
-        SizedBox(
+      children: [
+        const SizedBox(
           height: 50,
         ),
-        Align(
-          //alignment: Alignment.center,
+        const Align(
+          alignment: Alignment.center,
           child: Text(
             'ViB',
             textAlign: TextAlign.center,
@@ -22,6 +22,24 @@ class Body extends StatelessWidget {
             ),
           ),
         ),
+        Container(
+            alignment: Alignment.center,
+            child: ClipRRect(
+                borderRadius: BorderRadius.circular(29),
+                child: TextButton(
+                  style: TextButton.styleFrom(
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 20, horizontal: 40),
+                      backgroundColor: Colors.teal[100]),
+                  onPressed: () {},
+                  child: Text("LOGIN",
+                      style: TextStyle(
+                        color: Colors.indigo[900],
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      )),
+                ))),
       ],
     );
   }
