@@ -7,7 +7,7 @@ class Body extends StatelessWidget {
     return Column(
       children: [
         const SizedBox(
-          height: 50,
+          height: 200,
         ),
         const Align(
           alignment: Alignment.center,
@@ -23,6 +23,7 @@ class Body extends StatelessWidget {
           ),
         ),
         Container(
+            margin: const EdgeInsets.symmetric(vertical: 30),
             alignment: Alignment.center,
             child: ClipRRect(
                 borderRadius: BorderRadius.circular(29),
@@ -34,6 +35,25 @@ class Body extends StatelessWidget {
                       backgroundColor: Colors.teal[100]),
                   onPressed: () {},
                   child: Text("LOGIN",
+                      style: TextStyle(
+                        color: Colors.indigo[900],
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      )),
+                ))),
+        Container(
+            //margin: const EdgeInsets.symmetric(vertical: 20),
+            alignment: Alignment.center,
+            child: ClipRRect(
+                borderRadius: BorderRadius.circular(29),
+                child: TextButton(
+                  style: TextButton.styleFrom(
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 20, horizontal: 40),
+                      backgroundColor: Colors.teal[100]),
+                  onPressed: () {},
+                  child: Text("Create Account",
                       style: TextStyle(
                         color: Colors.indigo[900],
                         fontWeight: FontWeight.bold,
