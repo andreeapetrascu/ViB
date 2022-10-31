@@ -1,3 +1,4 @@
+//--no-sound-null-safety
 import 'package:flutter/material.dart';
 import 'package:frontend/screens/home/components/home_screen.dart';
 
