@@ -26,7 +26,11 @@ class Body extends StatelessWidget {
             ),
           ),
         ),
-        LoginButton(text: "Log In"),
+        LoginButton(
+            text:
+                "Log In"), //onpressed:  Navigator.of(context).pushAndRemoveUntil(
+        //MaterialPageRoute(builder: (context) => PatientDetailsScreen()),
+        //(Route<dynamic> route) => false); -> loginbutton.dart!!
         LoginButton(text: "Create Account"),
       ],
     );

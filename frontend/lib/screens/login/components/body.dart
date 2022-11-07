@@ -12,10 +12,21 @@ class Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Background(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
+          Container(
+              alignment: Alignment.topLeft,
+              child: IconButton(
+                color: Colors.white,
+                onPressed: () => Navigator.pop(context),
+                icon: const Icon(Icons.arrow_back),
+              )),
+          SizedBox(
+            height: size.height * 0.6,
+          ),
           RoundedInputField(
             hintText: "Your Email",
             onChanged: (String value) {},
