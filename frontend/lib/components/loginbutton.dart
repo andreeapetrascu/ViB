@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/screens/login/login_screen.dart';
 
 class LoginButton extends StatelessWidget {
   final String text;
+  final VoidCallback press;
   const LoginButton({
     Key? key,
     required this.text,
+    required this.press,
   }) : super(key: key);
 
   @override
@@ -23,16 +24,7 @@ class LoginButton extends StatelessWidget {
                   padding:
                       const EdgeInsets.symmetric(vertical: 20, horizontal: 40),
                   backgroundColor: Colors.teal[100]),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return LoginScreen();
-                    },
-                  ),
-                );
-              },
+              onPressed: press,
               child: Text(text,
                   style: TextStyle(
                     color: Colors.indigo[900],

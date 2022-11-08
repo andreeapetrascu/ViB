@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/components/text_field_container.dart';
 
 class RoundedPasswordField extends StatelessWidget {
+  // ignore: prefer_typing_uninitialized_variables
   final hintText;
   final ValueChanged<String> onChanged;
   const RoundedPasswordField({
@@ -18,11 +19,11 @@ class RoundedPasswordField extends StatelessWidget {
         onChanged: onChanged,
         decoration: InputDecoration(
           hintText: hintText,
-          icon: Icon(
+          icon: const Icon(
             Icons.lock,
             color: Color.fromARGB(255, 48, 65, 73),
           ),
-          suffixIcon: Icon(
+          suffixIcon: const Icon(
             Icons.visibility,
             color: Color.fromARGB(255, 48, 65, 73),
           ),

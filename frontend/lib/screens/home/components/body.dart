@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/screens/login/login_screen.dart';
 
 import '../../../components/loginbutton.dart';
 
@@ -7,7 +8,7 @@ class Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    //Size size = MediaQuery.of(context).size;
     return Column(
       children: [
         Container(
@@ -27,11 +28,18 @@ class Body extends StatelessWidget {
           ),
         ),
         LoginButton(
-            text:
-                "Log In"), //onpressed:  Navigator.of(context).pushAndRemoveUntil(
+            text: "Log In",
+            press: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return const LoginScreen();
+              }));
+            }), //onpressed:  Navigator.of(context).pushAndRemoveUntil(
         //MaterialPageRoute(builder: (context) => PatientDetailsScreen()),
         //(Route<dynamic> route) => false); -> loginbutton.dart!!
-        LoginButton(text: "Create Account"),
+        LoginButton(
+          text: "Create Account",
+          press: () {},
+        ),
       ],
     );
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/components/text_field_container.dart';
+import 'package:frontend/components/already_have_an_account_check.dart';
+import 'package:frontend/components/loginbutton.dart';
 import 'package:frontend/screens/login/components/background.dart';
 
 import '../../../components/rounded_input_field.dart';
@@ -15,9 +16,11 @@ class Body extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return Background(
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        //mainAxisAlignment: MainAxisAlignment.center,
+
         children: <Widget>[
           Container(
+              margin: const EdgeInsets.only(top: 20.0),
               alignment: Alignment.topLeft,
               child: IconButton(
                 color: Colors.white,
@@ -25,7 +28,7 @@ class Body extends StatelessWidget {
                 icon: const Icon(Icons.arrow_back),
               )),
           SizedBox(
-            height: size.height * 0.6,
+            height: size.height * 0.3,
           ),
           RoundedInputField(
             hintText: "Your Email",
@@ -35,6 +38,13 @@ class Body extends StatelessWidget {
             hintText: "Password",
             onChanged: (String value) {},
           ),
+          LoginButton(
+            text: "LOGIN",
+            press: () {},
+          ),
+          AlreadyHaveAnAccountCheck(
+            press: () {},
+          )
         ],
       ),
     );
