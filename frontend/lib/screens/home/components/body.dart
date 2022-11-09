@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/screens/login/login_screen.dart';
+import 'package:frontend/screens/singup/singup_screen.dart';
 
-import '../../../components/loginbutton.dart';
+import '../../../components/roundedbutton.dart';
 
 class Body extends StatelessWidget {
   const Body({super.key});
@@ -27,7 +28,7 @@ class Body extends StatelessWidget {
             ),
           ),
         ),
-        LoginButton(
+        RoundedButton(
             text: "Log In",
             press: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -36,9 +37,13 @@ class Body extends StatelessWidget {
             }), //onpressed:  Navigator.of(context).pushAndRemoveUntil(
         //MaterialPageRoute(builder: (context) => PatientDetailsScreen()),
         //(Route<dynamic> route) => false); -> loginbutton.dart!!
-        LoginButton(
+        RoundedButton(
           text: "Create Account",
-          press: () {},
+          press: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return const SingupScreen();
+            }));
+          },
         ),
       ],
     );

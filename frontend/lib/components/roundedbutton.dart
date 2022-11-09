@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class LoginButton extends StatelessWidget {
+class RoundedButton extends StatelessWidget {
   final String text;
   final VoidCallback press;
-  const LoginButton({
+  const RoundedButton({
     Key? key,
     required this.text,
     required this.press,
