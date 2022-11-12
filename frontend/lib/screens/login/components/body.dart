@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/components/already_have_an_account_check.dart';
 import 'package:frontend/components/roundedbutton.dart';
+import 'package:frontend/screens/home/components/home_screen.dart';
 import 'package:frontend/screens/login/components/background.dart';
 import 'package:frontend/screens/singup/singup_screen.dart';
 
@@ -23,7 +24,11 @@ class Body extends StatelessWidget {
               alignment: Alignment.topLeft,
               child: IconButton(
                 color: Colors.white,
-                onPressed: () => Navigator.pop(context),
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return const Homescreen();
+                  }));
+                },
                 icon: const Icon(Icons.arrow_back),
               )),
           SizedBox(

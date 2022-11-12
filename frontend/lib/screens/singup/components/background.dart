@@ -23,18 +23,6 @@ class Background extends StatelessWidget {
                 width: size.width * 0.4,
               ),
             ),
-            const Positioned(
-              top: 130,
-              child: Text(
-                "Sign Up",
-                style: TextStyle(
-                  fontSize: 40,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'Baloo2',
-                  color: Color.fromARGB(255, 173, 226, 236),
-                ),
-              ),
-            ),
             child,
           ],
         ));
