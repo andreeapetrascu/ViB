@@ -23,6 +23,7 @@ class Body extends StatelessWidget {
       child: SingleChildScrollView(
         child: Column(
           //mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             Container(
                 margin: const EdgeInsets.only(top: 20.0),
@@ -38,10 +39,10 @@ class Body extends StatelessWidget {
                   icon: const Icon(Icons.arrow_back),
                 )),
             SizedBox(
-              height: size.height * 0.3,
+              height: size.height * 0.1,
             ),
             const Positioned(
-              top: 130,
+              top: 30,
               child: Text(
                 "Sign Up",
                 style: TextStyle(
