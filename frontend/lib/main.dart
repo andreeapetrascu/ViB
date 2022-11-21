@@ -6,6 +6,7 @@ import 'package:frontend/screens/home/components/home_screen.dart';
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+
   runApp(const MyApp());
 }
 

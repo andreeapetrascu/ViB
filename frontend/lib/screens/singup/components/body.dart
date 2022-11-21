@@ -26,7 +26,7 @@ class Body extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             Container(
-                margin: const EdgeInsets.only(top: 20.0),
+                margin: const EdgeInsets.only(top: 0),
                 alignment: Alignment.topLeft,
                 child: IconButton(
                   color: Colors.white,
@@ -39,7 +39,7 @@ class Body extends StatelessWidget {
                   icon: const Icon(Icons.arrow_back),
                 )),
             SizedBox(
-              height: size.height * 0.1,
+              height: size.height * 0.3,
             ),
             const Positioned(
               top: 30,

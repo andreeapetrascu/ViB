@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:frontend/components/text_field_container.dart';
 
 class RoundedInputField extends StatelessWidget {
+  final emailController = TextEditingController();
   final String hintText;
   final IconData icon;
   final ValueChanged<String> onChanged;
-  const RoundedInputField({
+  RoundedInputField({
     Key? key,
     required this.hintText,
     this.icon = Icons.person,
@@ -16,6 +17,7 @@ class RoundedInputField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFieldContainer(
       child: TextField(
+        controller: emailController,
         onChanged: onChanged,
         decoration: InputDecoration(
             icon: Icon(
