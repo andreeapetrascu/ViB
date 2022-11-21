@@ -2,12 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/components/already_have_an_account_check.dart';
 import 'package:frontend/components/roundedbutton.dart';
+import 'package:frontend/components/text_field_container.dart';
 import 'package:frontend/screens/home/components/home_screen.dart';
 import 'package:frontend/screens/login/components/background.dart';
 import 'package:frontend/screens/singup/singup_screen.dart';
-
-import '../../../components/rounded_input_field.dart';
-import '../../../components/rounded_password_field.dart';
 
 class Body extends StatelessWidget {
   final emailController = TextEditingController();
@@ -43,40 +41,44 @@ class Body extends StatelessWidget {
             //   hintText: "Your Email",
             //   onChanged: (String value) {},
             // ),
-            TextField(
-              controller: emailController,
-              //onChanged: onChanged,
-              decoration: const InputDecoration(
-                  icon: Icon(
-                    Icons.person,
-                    color: Color.fromARGB(255, 48, 65, 73),
-                  ),
-                  hintText: "Your Email",
-                  border: InputBorder.none),
+            TextFieldContainer(
+              child: TextField(
+                controller: emailController,
+                //onChanged: onChanged,
+                decoration: const InputDecoration(
+                    icon: Icon(
+                      Icons.person,
+                      color: Color.fromARGB(255, 48, 65, 73),
+                    ),
+                    hintText: "Your Email",
+                    border: InputBorder.none),
+              ),
             ),
             // RoundedPasswordField(
             //   hintText: "Password",
             //   onChanged: (String value) {},
             // ),
-            TextField(
-              controller: passwordController,
-              obscureText: true,
-              //onChanged: onChanged,
-              decoration: const InputDecoration(
-                hintText: "Password",
-                icon: Icon(
-                  Icons.lock,
-                  color: Color.fromARGB(255, 48, 65, 73),
+            TextFieldContainer(
+              child: TextField(
+                controller: passwordController,
+                obscureText: true,
+                //onChanged: onChanged,
+                decoration: const InputDecoration(
+                  hintText: "Password",
+                  icon: Icon(
+                    Icons.lock,
+                    color: Color.fromARGB(255, 48, 65, 73),
+                  ),
+                  suffixIcon: Icon(
+                    Icons.visibility,
+                    color: Color.fromARGB(255, 48, 65, 73),
+                  ),
+                  border: InputBorder.none,
                 ),
-                suffixIcon: Icon(
-                  Icons.visibility,
-                  color: Color.fromARGB(255, 48, 65, 73),
-                ),
-                border: InputBorder.none,
               ),
             ),
             SizedBox(
-              height: size.height * 0.03,
+              height: size.height * 0.05,
             ),
             RoundedButton(
               text: "LOGIN",
@@ -88,7 +90,7 @@ class Body extends StatelessWidget {
               },
             ),
             SizedBox(
-              height: size.height * 0.02,
+              height: size.height * 0.2,
             ),
             AlreadyHaveAnAccountCheck(
               press: () {

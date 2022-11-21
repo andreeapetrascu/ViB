@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/screens/hellopage/hellopage.dart';
-import '../home/components/home_screen.dart';
 import './components/body.dart';
 
 class LoginScreen extends StatelessWidget {

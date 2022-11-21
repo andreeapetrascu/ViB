@@ -22,8 +22,8 @@ class Body extends StatelessWidget {
     return Background(
       child: SingleChildScrollView(
         child: Column(
-          //mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          //mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             Container(
                 margin: const EdgeInsets.only(top: 0),
@@ -39,7 +39,7 @@ class Body extends StatelessWidget {
                   icon: const Icon(Icons.arrow_back),
                 )),
             SizedBox(
-              height: size.height * 0.3,
+              height: size.height * 0.25,
             ),
             const Positioned(
               top: 30,
@@ -52,6 +52,9 @@ class Body extends StatelessWidget {
                   color: Color.fromARGB(255, 173, 226, 236),
                 ),
               ),
+            ),
+            SizedBox(
+              height: size.height * 0.1,
             ),
             RoundedInputField(
               hintText: "Your Email",
@@ -66,14 +69,14 @@ class Body extends StatelessWidget {
               onChanged: (String value) {},
             ),
             SizedBox(
-              height: size.height * 0.03,
+              height: size.height * 0.01,
             ),
             RoundedButton(
               text: "Create Account",
               press: () {},
             ),
             SizedBox(
-              height: size.height * 0.02,
+              height: size.height * 0.03,
             ),
             AlreadyHaveAnAccountCheck(
               login: false,
