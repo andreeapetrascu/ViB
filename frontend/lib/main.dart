@@ -1,6 +1,7 @@
 //--no-sound-null-safety
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:frontend/backend/utils.dart';
 import 'package:frontend/screens/home/components/home_screen.dart';
 
 Future main() async {
@@ -10,6 +11,8 @@ Future main() async {
   runApp(const MyApp());
 }
 
+final navigatorKey = GlobalKey<NavigatorState>();
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -17,6 +20,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      scaffoldMessengerKey: Utils.messagerKey,
+      navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false,
       title: 'ViB',
       theme: ThemeData(

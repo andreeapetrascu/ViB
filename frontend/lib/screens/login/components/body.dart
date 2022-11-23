@@ -1,8 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:frontend/backend/utils.dart';
 import 'package:frontend/components/already_have_an_account_check.dart';
 import 'package:frontend/components/roundedbutton.dart';
 import 'package:frontend/components/text_field_container.dart';
+import 'package:frontend/main.dart';
 import 'package:frontend/screens/home/components/home_screen.dart';
 import 'package:frontend/screens/login/components/background.dart';
 import 'package:frontend/screens/singup/singup_screen.dart';
@@ -37,10 +39,6 @@ class Body extends StatelessWidget {
             SizedBox(
               height: size.height * 0.3,
             ),
-            // RoundedInputField(
-            //   hintText: "Your Email",
-            //   onChanged: (String value) {},
-            // ),
             TextFieldContainer(
               child: TextField(
                 controller: emailController,
@@ -54,10 +52,6 @@ class Body extends StatelessWidget {
                     border: InputBorder.none),
               ),
             ),
-            // RoundedPasswordField(
-            //   hintText: "Password",
-            //   onChanged: (String value) {},
-            // ),
             TextFieldContainer(
               child: TextField(
                 controller: passwordController,
@@ -83,10 +77,23 @@ class Body extends StatelessWidget {
             RoundedButton(
               text: "LOGIN",
               press: () async {
-                await FirebaseAuth.instance.signInWithEmailAndPassword(
-                  email: emailController.text.trim(),
-                  password: passwordController.text.trim(),
-                );
+                showDialog(
+                    context: context,
+                    barrierDismissible: false,
+                    builder: (context) =>
+                        const Center(child: CircularProgressIndicator()));
+                try {
+                  await FirebaseAuth.instance.signInWithEmailAndPassword(
+                    email: emailController.text.trim(),
+                    password: passwordController.text.trim(),
+                  );
+                } on FirebaseAuthException catch (e) {
+                  // ignore: avoid_print
+                  print(e);
+
+                  Utils.showSnackBar(e.message);
+                }
+                navigatorKey.currentState!.popUntil((route) => route.isFirst);
               },
             ),
             SizedBox(
