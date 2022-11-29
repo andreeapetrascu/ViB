@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../home/components/home_screen.dart';
+import 'package:geolocator/geolocator.dart';
 
 class HelloPage extends StatelessWidget {
   Widget build(BuildContext context) {
