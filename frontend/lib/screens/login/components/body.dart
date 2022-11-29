@@ -77,11 +77,11 @@ class Body extends StatelessWidget {
             RoundedButton(
               text: "LOGIN",
               press: () async {
-                showDialog(
-                    context: context,
-                    barrierDismissible: false,
-                    builder: (context) =>
-                        const Center(child: CircularProgressIndicator()));
+                // showDialog(
+                //     context: context,
+                //     barrierDismissible: false,
+                //     builder: (context) =>
+                //         const Center(child: CircularProgressIndicator()));
                 try {
                   await FirebaseAuth.instance.signInWithEmailAndPassword(
                     email: emailController.text.trim(),
@@ -93,7 +93,7 @@ class Body extends StatelessWidget {
 
                   Utils.showSnackBar(e.message);
                 }
-                navigatorKey.currentState!.popUntil((route) => route.isFirst);
+                //navigatorKey.currentState!.popUntil((route) => route.isFirst);
               },
             ),
             SizedBox(

@@ -4,10 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/backend/utils.dart';
 import 'package:frontend/components/already_have_an_account_check.dart';
 import 'package:frontend/components/roundedbutton.dart';
-import 'package:frontend/components/rounded_input_field.dart';
-import 'package:frontend/components/rounded_password_field.dart';
 import 'package:frontend/components/text_field_container.dart';
-import 'package:frontend/main.dart';
 import 'package:frontend/screens/login/login_screen.dart';
 import 'package:frontend/screens/singup/components/background.dart';
 
@@ -128,11 +125,11 @@ class Body extends StatelessWidget {
                 press: () async {
                   final isValid = formKey.currentState!.validate();
                   if (!isValid) return;
-                  showDialog(
-                      context: context,
-                      barrierDismissible: false,
-                      builder: (context) =>
-                          const Center(child: CircularProgressIndicator()));
+                  // showDialog(
+                  //     context: context,
+                  //     barrierDismissible: false,
+                  //     builder: (context) =>
+                  //         const Center(child: CircularProgressIndicator()));
                   try {
                     await FirebaseAuth.instance.createUserWithEmailAndPassword(
                       email: emailController.text.trim(),
@@ -143,7 +140,7 @@ class Body extends StatelessWidget {
                     print(e);
                     Utils.showSnackBar(e.message);
                   }
-                  navigatorKey.currentState!.popUntil((route) => route.isFirst);
+                  //navigatorKey.currentState!.popUntil((route) => route.isFirst);
                 },
               ),
               SizedBox(
