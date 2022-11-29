@@ -20,7 +20,7 @@ class Background extends StatelessWidget {
               top: 50,
               child: Image.asset(
                 "assets/images/Vib_logo.png",
-                width: size.width * 0.4,
+                width: size.width * 0.8,
               ),
             ),
             child,
