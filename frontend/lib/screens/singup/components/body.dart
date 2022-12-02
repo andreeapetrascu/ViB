@@ -10,19 +10,32 @@ import 'package:frontend/screens/singup/components/background.dart';
 
 import '../../home/components/home_screen.dart';
 
-class Body extends StatelessWidget {
-  final formKey = GlobalKey<FormState>();
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
+class Body extends StatefulWidget {
+  // final formKey = GlobalKey<FormState>();
+  // final emailController = TextEditingController();
+  // final passwordController = TextEditingController();
+  // final confirmPasswordController = TextEditingController();
   final Widget child;
 
-  Body({
+  @override
+  _BodyState createState() => _BodyState();
+
+  const Body({
     super.key,
     required this.child,
   });
+}
+
+class _BodyState extends State<Body> {
+  final formKey = GlobalKey<FormState>();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    bool passwordVisible = false;
+    bool confirmationVisible = false;
     Size size = MediaQuery.of(context).size;
     return Background(
       child: SingleChildScrollView(
@@ -30,7 +43,6 @@ class Body extends StatelessWidget {
           key: formKey,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            //mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               Container(
                   margin: const EdgeInsets.only(top: 0),
@@ -63,14 +75,9 @@ class Body extends StatelessWidget {
               SizedBox(
                 height: size.height * 0.1,
               ),
-              // RoundedInputField(
-              //   hintText: "Your Email",
-              //   onChanged: (String value) {},
-              // ),
               TextFieldContainer(
                 child: TextFormField(
                   controller: emailController,
-                  //onChanged: onChanged,
                   decoration: const InputDecoration(
                     icon: Icon(
                       Icons.person,
@@ -86,24 +93,35 @@ class Body extends StatelessWidget {
                           : null,
                 ),
               ),
-              // RoundedPasswordField(
-              //   hintText: "Password",
-              //   onChanged: (String value) {},
-              // ),
               TextFieldContainer(
                 child: TextFormField(
                   controller: passwordController,
-                  obscureText: true,
-                  //onChanged: onChanged,
-                  decoration: const InputDecoration(
+                  obscureText: !passwordVisible,
+                  decoration: InputDecoration(
                     hintText: "Password",
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.lock,
                       color: Color.fromARGB(255, 48, 65, 73),
                     ),
-                    suffixIcon: Icon(
-                      Icons.visibility,
-                      color: Color.fromARGB(255, 48, 65, 73),
+                    suffixIcon: IconButton(
+                      color: const Color.fromARGB(255, 48, 65, 73),
+                      onPressed: () {
+                        Future.delayed(
+                          Duration.zero,
+                          () {
+                            setState(
+                              () {
+                                passwordVisible = !passwordVisible;
+                              },
+                            );
+                          },
+                        );
+                      },
+                      icon: Icon(
+                        passwordVisible
+                            ? Icons.visibility
+                            : Icons.visibility_off,
+                      ),
                     ),
                     border: InputBorder.none,
                   ),
@@ -117,6 +135,29 @@ class Body extends StatelessWidget {
               //   hintText: "Confirm Password",
               //   onChanged: (String value) {},
               // ),
+              TextFieldContainer(
+                child: TextFormField(
+                  controller: confirmPasswordController,
+                  obscureText: true,
+                  //onChanged: onChanged,
+                  decoration: const InputDecoration(
+                    hintText: "Confirm Password",
+                    icon: Icon(
+                      Icons.lock,
+                      color: Color.fromARGB(255, 48, 65, 73),
+                    ),
+                    suffixIcon: Icon(
+                      Icons.visibility,
+                      color: Color.fromARGB(255, 48, 65, 73),
+                    ),
+                    border: InputBorder.none,
+                  ),
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  validator: (value) => value != passwordController.text
+                      ? 'Enter the same password!'
+                      : null,
+                ),
+              ),
               SizedBox(
                 height: size.height * 0.01,
               ),
