@@ -38,12 +38,12 @@ class _HeaderWidgetState extends State<HeaderWidget> {
       children: [
         Container(
           margin: const EdgeInsets.only(left: 20, right: 20),
-          alignment: Alignment.topLeft,
+          alignment: Alignment.topCenter,
           child: Text(city, style: const TextStyle(fontSize: 30)),
         ),
         Container(
           margin: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
-          alignment: Alignment.topLeft,
+          alignment: Alignment.topCenter,
           child: Text(
             date,
             style:
