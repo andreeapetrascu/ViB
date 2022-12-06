@@ -97,31 +97,39 @@ class _BodyState extends State<Body> {
                 child: TextFormField(
                   controller: passwordController,
                   obscureText: !passwordVisible,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     hintText: "Password",
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.lock,
                       color: Color.fromARGB(255, 48, 65, 73),
                     ),
-                    suffixIcon: IconButton(
-                      color: const Color.fromARGB(255, 48, 65, 73),
-                      onPressed: () {
-                        Future.delayed(
-                          Duration.zero,
-                          () {
-                            setState(
-                              () {
-                                passwordVisible = !passwordVisible;
-                              },
-                            );
-                          },
-                        );
-                      },
-                      icon: Icon(
-                        passwordVisible
-                            ? Icons.visibility
-                            : Icons.visibility_off,
-                      ),
+                    // suffixIcon: IconButton(
+                    //   color: const Color.fromARGB(255, 48, 65, 73),
+                    //   onPressed: () {
+                    //     Future.delayed(
+                    //       Duration.zero,
+                    //       () {
+                    //         setState(
+                    //           () {
+                    //             passwordVisible = !passwordVisible;
+                    //           },
+                    //         );
+                    //       },
+                    //     );
+                    //   },
+                    //   icon: passwordVisible
+                    //       ? const Icon(
+                    //           Icons.visibility,
+                    //           color: Color.fromARGB(255, 48, 65, 73),
+                    //         )
+                    //       : const Icon(
+                    //           Icons.visibility_off,
+                    //           color: Color.fromARGB(255, 48, 65, 73),
+                    //         ),
+                    // ),
+                    suffixIcon: Icon(
+                      Icons.visibility_off,
+                      color: Color.fromARGB(255, 48, 65, 73),
                     ),
                     border: InputBorder.none,
                   ),
@@ -139,7 +147,6 @@ class _BodyState extends State<Body> {
                 child: TextFormField(
                   controller: confirmPasswordController,
                   obscureText: true,
-                  //onChanged: onChanged,
                   decoration: const InputDecoration(
                     hintText: "Confirm Password",
                     icon: Icon(
@@ -147,7 +154,7 @@ class _BodyState extends State<Body> {
                       color: Color.fromARGB(255, 48, 65, 73),
                     ),
                     suffixIcon: Icon(
-                      Icons.visibility,
+                      Icons.visibility_off,
                       color: Color.fromARGB(255, 48, 65, 73),
                     ),
                     border: InputBorder.none,
