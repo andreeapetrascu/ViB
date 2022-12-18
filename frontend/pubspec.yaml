@@ -44,7 +44,7 @@ dependencies:
   #Geolocator
   geolocator: ^8.1.0
 
-  get: ^3.23.1
+  get: ^4.6.5
   geocoding: ^2.0.5
 
 dev_dependencies:

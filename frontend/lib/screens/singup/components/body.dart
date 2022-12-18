@@ -31,11 +31,25 @@ class _BodyState extends State<Body> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
+  bool passwordVisible = false;
+  bool confirmationVisible = false;
+  String? _password;
+
+  // Toggles the password show status
+  void _toggle() {
+    setState(() {
+      passwordVisible = !passwordVisible;
+    });
+  }
+
+  void _toggle2() {
+    setState(() {
+      confirmationVisible = !confirmationVisible;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    bool passwordVisible = false;
-    bool confirmationVisible = false;
     Size size = MediaQuery.of(context).size;
     return Background(
       child: SingleChildScrollView(
@@ -97,41 +111,42 @@ class _BodyState extends State<Body> {
                 child: TextFormField(
                   controller: passwordController,
                   obscureText: !passwordVisible,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     hintText: "Password",
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.lock,
                       color: Color.fromARGB(255, 48, 65, 73),
                     ),
-                    // suffixIcon: IconButton(
-                    //   color: const Color.fromARGB(255, 48, 65, 73),
-                    //   onPressed: () {
-                    //     Future.delayed(
-                    //       Duration.zero,
-                    //       () {
-                    //         setState(
-                    //           () {
-                    //             passwordVisible = !passwordVisible;
-                    //           },
-                    //         );
-                    //       },
-                    //     );
-                    //   },
-                    //   icon: passwordVisible
-                    //       ? const Icon(
-                    //           Icons.visibility,
-                    //           color: Color.fromARGB(255, 48, 65, 73),
-                    //         )
-                    //       : const Icon(
-                    //           Icons.visibility_off,
-                    //           color: Color.fromARGB(255, 48, 65, 73),
-                    //         ),
-                    // ),
-                    suffixIcon: Icon(
-                      Icons.visibility_off,
-                      color: Color.fromARGB(255, 48, 65, 73),
+                    suffixIcon: IconButton(
+                      color: const Color.fromARGB(255, 48, 65, 73),
+                      onPressed: _toggle,
+                      // () {
+                      //   Future.delayed(
+                      //     Duration.zero,
+                      //     () {
+                      //       setState(
+                      //         () {
+                      //           passwordVisible = !passwordVisible;
+                      //         },
+                      //       );
+                      //     },
+                      //   );
+                      // },
+                      icon: passwordVisible
+                          ? const Icon(
+                              Icons.visibility,
+                              color: Color.fromARGB(255, 48, 65, 73),
+                            )
+                          : const Icon(
+                              Icons.visibility_off,
+                              color: Color.fromARGB(255, 48, 65, 73),
+                            ),
                     ),
-                    border: InputBorder.none,
+                    // suffixIcon: Icon(
+                    //   Icons.visibility_off,
+                    //   color: Color.fromARGB(255, 48, 65, 73),
+                    // ),
+                    // border: InputBorder.none,
                   ),
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (value) => value != null && value.length < 5
@@ -146,16 +161,37 @@ class _BodyState extends State<Body> {
               TextFieldContainer(
                 child: TextFormField(
                   controller: confirmPasswordController,
-                  obscureText: true,
-                  decoration: const InputDecoration(
+                  obscureText: !confirmationVisible,
+                  decoration: InputDecoration(
                     hintText: "Confirm Password",
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.lock,
                       color: Color.fromARGB(255, 48, 65, 73),
                     ),
-                    suffixIcon: Icon(
-                      Icons.visibility_off,
-                      color: Color.fromARGB(255, 48, 65, 73),
+                    suffixIcon: IconButton(
+                      color: const Color.fromARGB(255, 48, 65, 73),
+                      onPressed: _toggle2,
+                      // () {
+                      //   Future.delayed(
+                      //     Duration.zero,
+                      //     () {
+                      //       setState(
+                      //         () {
+                      //           confirmationVisible = !confirmationVisible;
+                      //         },
+                      //       );
+                      //     },
+                      //   );
+                      // },
+                      icon: confirmationVisible
+                          ? const Icon(
+                              Icons.visibility,
+                              color: Color.fromARGB(255, 48, 65, 73),
+                            )
+                          : const Icon(
+                              Icons.visibility_off,
+                              color: Color.fromARGB(255, 48, 65, 73),
+                            ),
                     ),
                     border: InputBorder.none,
                   ),
@@ -165,6 +201,7 @@ class _BodyState extends State<Body> {
                       : null,
                 ),
               ),
+
               SizedBox(
                 height: size.height * 0.01,
               ),
