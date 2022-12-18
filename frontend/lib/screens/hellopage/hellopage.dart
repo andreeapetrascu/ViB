@@ -122,9 +122,7 @@ class _HelloPageState extends State<HelloPage> {
         break;
       case 5:
         print("User Logged out");
-        Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (context) => LoginScreen()),
-            (route) => false);
+        FirebaseAuth.instance.signOut();
         break;
     }
   }
