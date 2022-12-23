@@ -4,17 +4,33 @@ import 'package:frontend/backend/utils.dart';
 import 'package:frontend/components/already_have_an_account_check.dart';
 import 'package:frontend/components/roundedbutton.dart';
 import 'package:frontend/components/text_field_container.dart';
-import 'package:frontend/main.dart';
 import 'package:frontend/screens/home/components/home_screen.dart';
 import 'package:frontend/screens/login/components/background.dart';
 import 'package:frontend/screens/singup/singup_screen.dart';
 
-class Body extends StatelessWidget {
+class Body extends StatefulWidget {
+  final Widget child;
+
+  @override
+  _BodyState createState() => _BodyState();
+
+  const Body({
+    super.key,
+    required this.child,
+  });
+}
+
+class _BodyState extends State<Body> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-  Body({
-    Key? key,
-  }) : super(key: key);
+  bool passwordVisible = false;
+  String? _password;
+
+  void _toggle() {
+    setState(() {
+      passwordVisible = !passwordVisible;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,17 +71,26 @@ class Body extends StatelessWidget {
             TextFieldContainer(
               child: TextField(
                 controller: passwordController,
-                obscureText: true,
+                obscureText: !passwordVisible,
                 //onChanged: onChanged,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   hintText: "Password",
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.lock,
                     color: Color.fromARGB(255, 48, 65, 73),
                   ),
-                  suffixIcon: Icon(
-                    Icons.visibility,
-                    color: Color.fromARGB(255, 48, 65, 73),
+                  suffixIcon: IconButton(
+                    color: const Color.fromARGB(255, 48, 65, 73),
+                    onPressed: _toggle,
+                    icon: passwordVisible
+                        ? const Icon(
+                            Icons.visibility,
+                            color: Color.fromARGB(255, 48, 65, 73),
+                          )
+                        : const Icon(
+                            Icons.visibility_off,
+                            color: Color.fromARGB(255, 48, 65, 73),
+                          ),
                   ),
                   border: InputBorder.none,
                 ),

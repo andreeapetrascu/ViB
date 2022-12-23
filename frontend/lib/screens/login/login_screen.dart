@@ -16,9 +16,11 @@ class LoginScreen extends StatelessWidget {
             } else if (snapshot.hasError) {
               return const Center(child: Text('Something went wrong!'));
             } else if (snapshot.hasData) {
-              return HelloPage();
+              return const HelloPage();
             } else {
-              return Body();
+              return Body(
+                child: Column(),
+              );
             }
           },
         ),
