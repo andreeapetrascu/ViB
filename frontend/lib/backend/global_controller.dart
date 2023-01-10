@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 
 class GlobalController extends GetxController {
   final RxBool _isloading = true.obs;
-  final RxDouble _latitude = 0.0.obs;
-  final RxDouble _longitude = 0.0.obs;
+  static final RxDouble _latitude = 0.0.obs;
+  static final RxDouble _longitude = 0.0.obs;
 
   RxBool checkLoading() => _isloading;
   RxDouble getLatitude() => _latitude;
@@ -40,6 +40,8 @@ class GlobalController extends GetxController {
     return await Geolocator.getCurrentPosition(
             desiredAccuracy: LocationAccuracy.high)
         .then((value) {
+      print(value.latitude);
+      print(value.longitude);
       _latitude.value = value.latitude;
       _longitude.value = value.longitude;
       _isloading.value = false;
