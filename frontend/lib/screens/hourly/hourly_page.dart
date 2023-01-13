@@ -1,30 +1,27 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/backend/global_controller.dart';
-import 'package:frontend/screens/hourly/hourly_page.dart';
+import 'package:frontend/screens/hellopage/hellopage.dart';
 import 'package:frontend/screens/login/login_screen.dart';
 import 'package:frontend/widgets/header_widget.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class HelloPage extends StatefulWidget {
-  const HelloPage({Key? key}) : super(key: key);
+class HourlyPage extends StatefulWidget {
+  const HourlyPage({Key? key}) : super(key: key);
   @override
-  State<HelloPage> createState() => _HelloPageState();
+  State<HourlyPage> createState() => _HourlyPageState();
 }
 
-class _HelloPageState extends State<HelloPage> {
+class _HourlyPageState extends State<HourlyPage> {
   final GlobalController globalController =
       Get.put(GlobalController(), permanent: true);
 
   var _json;
   var _json_air;
-  var desc;
   var main;
-  var wind;
-  var clouds;
-  var aqi;
+  var ora12;
   final key = "7511aa5b119a0923ca0934b36e04ab4b";
 
   @override
@@ -118,22 +115,13 @@ class _HelloPageState extends State<HelloPage> {
                                   children: <TextSpan>[
                                     TextSpan(
                                         text:
-                                            '${'\n'}${'\n'}      ${main['temp'].toInt()}°${'\n'}${'\n'}${'\n'}${'\n'}',
+                                            '${'\n'}${'\n'}${main.toInt()}°${'\n'}${'\n'}${'\n'}${'\n'}',
                                         style: TextStyle(
                                             color: Colors.white,
-                                            fontSize: 80.0,
+                                            fontSize: 60.0,
                                             fontFamily: 'Baloo2')),
                                     TextSpan(
-                                      text:
-                                          '${'\n'}${'\n'}${'\n'}${'\n'}Air quality:              ${aqi}${'\n'}Wind:                       ${wind['speed'].toInt()}km/h${'\n'}Humidity:                ${main['humidity']}%${'\n'}Clouds:                    ${clouds['all']}%${'\n'}Real feel:                 ${main['feels_like'].toInt()}°',
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 30.0,
-                                          fontFamily: 'Baloo2'),
-                                    ),
-                                    TextSpan(
-                                      text:
-                                          '${'\n'}${'\n'}${'\n'}${'\n'}${'\n'}${'\n'}${'\n'}${'\n'}${'\n'}${'\n'}                     ViB | °C',
+                                      text: '${'\n'}${'\n'}ViB | °C',
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontSize: 25.0,
@@ -184,47 +172,21 @@ class _HelloPageState extends State<HelloPage> {
 
   Future getData(double lat, double long) async {
     var url =
-        'https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$long&appid=$key&units=metric';
+        'https://pro.openweathermap.org/data/2.5/forecast/hourly?lat=$lat&lon=$long&appid=$key&units=metric';
     final uri = Uri.parse(url);
     final response = await http.get(uri);
 
     if (response.statusCode == 200) {
       _json = json.decode(response.body);
     }
-    desc = _json['weather'];
-    main = _json['main'];
-    wind = _json['wind'];
-    clouds = _json['clouds'];
 
-    var url_air =
-        'http://api.openweathermap.org/data/2.5/air_pollution?lat=$lat&lon=$long&appid=$key';
-    final uri_air = Uri.parse(url_air);
-    final response_air = await http.get(uri_air);
+    main = _json['list'];
+    var aaa = main[0];
+    var bbb = aaa['main'];
+    main = bbb['temp'];
 
-    if (response_air.statusCode == 200) {
-      _json_air = json.decode(response_air.body);
-    }
-    var aaa = _json_air['list'];
-    var ccc = aaa[0];
-    var bbb = ccc['main'];
+    //ora12 = _json['list'];
 
-    switch (bbb['aqi']) {
-      case 1:
-        aqi = "Good";
-        break;
-      case 2:
-        aqi = "Fair";
-        break;
-      case 3:
-        aqi = "Moderate";
-        break;
-      case 4:
-        aqi = "Poor";
-        break;
-      case 5:
-        aqi = "Very Poor";
-        break;
-    }
     return 1;
   }
 }

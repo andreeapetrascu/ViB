@@ -99,8 +99,8 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
-#  fonts:
-#    - family: Baloo2
-#     fonts:
-#      - asset: fonts/static/Baloo2-ExtraBold.ttf
-#        weight: 100
+  # fonts:
+  #   - family: Baloo2
+  #     fonts:
+  #       - asset: fonts/static/Baloo2-VariableFont_wght
+  #         weight: 100
