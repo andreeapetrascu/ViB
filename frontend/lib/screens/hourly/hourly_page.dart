@@ -18,6 +18,7 @@ class _HourlyPageState extends State<HourlyPage> {
 
   var _json;
   var main;
+  var clouds;
 
   var ora1 = "";
   var ora2 = "";
@@ -89,7 +90,7 @@ class _HourlyPageState extends State<HourlyPage> {
                                         Text.rich(TextSpan(children: <TextSpan>[
                                   TextSpan(
                                     text:
-                                        '${'\n'}${'\n'}          ${main.toInt()}°${'\n'}${'\n'}',
+                                        '${'\n'}${'\n'}        ${main.toInt()}°${'\n'}${'\n'}',
                                     style: const TextStyle(
                                         color: Colors.white,
                                         fontSize: 60.0,
@@ -132,6 +133,8 @@ class _HourlyPageState extends State<HourlyPage> {
     var aux = _json['list'];
     var aaa = aux[0];
     var bbb = aaa['main'];
+    var aux1 = aaa['clouds'];
+    clouds = aux1['all'];
 
     main = bbb['temp'];
 

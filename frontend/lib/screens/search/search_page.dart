@@ -41,7 +41,7 @@ class _SearchPageState extends State<SearchPage> {
     //var lat = globalController.getLatitude().value;
     //var long = globalController.getLongitude().value;
 
-    getData(lat, long);
+    //getData(lat, long);
 
     return Scaffold(
         appBar: AppBar(

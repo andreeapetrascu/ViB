@@ -13,14 +13,14 @@ class HelloPage extends StatefulWidget {
 }
 
 class _HelloPageState extends State<HelloPage> {
-  final Map<String, AssetImage> images = {
-    "clear": AssetImage(
-        "https://firebasestorage.googleapis.com/v0/b/vib-database.appspot.com/o/clear.jpg?alt=media&token=7aed2273-c7b7-409a-a53d-c26c5ce148a3"),
-    "cloudy": AssetImage(
-        "https://firebasestorage.googleapis.com/v0/b/vib-database.appspot.com/o/clouds.jpg?alt=media&token=8bb38610-8dc5-4a56-827b-c514222b3ff8"),
-    "rain": AssetImage(
-        "https://firebasestorage.googleapis.com/v0/b/vib-database.appspot.com/o/rain.jpg?alt=media&token=018f6aa7-0226-4dda-9fd4-fd6842c52180")
-  };
+  // final Map<String, AssetImage> images = {
+  //   "clear": AssetImage(
+  //       "https://firebasestorage.googleapis.com/v0/b/vib-database.appspot.com/o/clear.jpg?alt=media&token=7aed2273-c7b7-409a-a53d-c26c5ce148a3"),
+  //   "cloudy": AssetImage(
+  //       "https://firebasestorage.googleapis.com/v0/b/vib-database.appspot.com/o/clouds.jpg?alt=media&token=8bb38610-8dc5-4a56-827b-c514222b3ff8"),
+  //   "rain": AssetImage(
+  //       "https://firebasestorage.googleapis.com/v0/b/vib-database.appspot.com/o/rain.jpg?alt=media&token=018f6aa7-0226-4dda-9fd4-fd6842c52180")
+  // };
 
   final GlobalController globalController =
       Get.put(GlobalController(), permanent: true);
@@ -32,16 +32,13 @@ class _HelloPageState extends State<HelloPage> {
   var wind;
   var clouds;
   var aqi;
+  var img;
   final key = "7511aa5b119a0923ca0934b36e04ab4b";
 
   @override
   Widget build(BuildContext context) {
     var lat = globalController.getLatitude().value;
     var long = globalController.getLongitude().value;
-
-    getData(lat, long);
-
-    //final user = FirebaseAuth.instance.currentUser!;
     return Scaffold(
         appBar: AppBar(
             backgroundColor: Colors.transparent,
@@ -49,64 +46,78 @@ class _HelloPageState extends State<HelloPage> {
             actions: const [
               Menu(),
             ]),
-        body: Container(
-            decoration: BoxDecoration(
-                image: DecorationImage(
-              image:
-                  //if(){} - if in care verificam cum e vremea ca sa afisam poza de fundal buna
-                  NetworkImage(
-                      "https://firebasestorage.googleapis.com/v0/b/vib-database.appspot.com/o/clear.jpg?alt=media&token=7aed2273-c7b7-409a-a53d-c26c5ce148a3"),
-            )),
-            child: SafeArea(
-                child: Obx(() => globalController.checkLoading().isTrue
-                    ? const Center(
-                        child: CircularProgressIndicator(),
-                      )
-                    : ListView(scrollDirection: Axis.vertical, children: [
-                        const SizedBox(height: 20),
-                        const HeaderWidget(),
-                        FutureBuilder(
-                            future: getData(lat, long),
-                            builder:
-                                (BuildContext context, AsyncSnapshot snapshot) {
-                              if (!snapshot.hasData) {
-                                return const Center(
-                                  child: CircularProgressIndicator(),
-                                );
-                              } else {
-                                return Center(
-                                    child:
-                                        Text.rich(TextSpan(children: <TextSpan>[
-                                  TextSpan(
-                                      text:
-                                          '${'\n'}${'\n'}       ${main['temp'].toInt()}°${'\n'}${'\n'}${'\n'}${'\n'}',
-                                      style: const TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 80.0,
-                                          fontWeight: FontWeight.bold,
-                                          fontFamily: 'Baloo2')),
-                                  TextSpan(
-                                    text:
-                                        '${'\n'}${'\n'}${'\n'}${'\n'}Air quality:              ${aqi}${'\n'}Wind:                       ${wind['speed'].toInt()}km/h${'\n'}Humidity:                ${main['humidity']}%${'\n'}Clouds:                    ${clouds['all']}%${'\n'}Real feel:                 ${main['feels_like'].toInt()}°',
-                                    style: const TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 30.0,
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: 'Baloo2'),
-                                  ),
-                                  const TextSpan(
-                                    text:
-                                        '${'\n'}${'\n'}${'\n'}${'\n'}${'\n'}${'\n'}${'\n'}${'\n'}${'\n'}${'\n'}                     ViB | °C',
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 25.0,
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: 'Baloo2'),
-                                  )
-                                ])));
-                              }
-                            })
-                      ])))));
+        body: FutureBuilder(
+            future: getData(lat, long),
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              if (!snapshot.hasData) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else {
+                if (clouds['all'] <= 25) {
+                  img =
+                      "https://firebasestorage.googleapis.com/v0/b/vib-database.appspot.com/o/clear.jpg?alt=media&token=7aed2273-c7b7-409a-a53d-c26c5ce148a3";
+                } else if (clouds['all'] <= 50) {
+                  img =
+                      "https://firebasestorage.googleapis.com/v0/b/vib-database.appspot.com/o/clouds50%25.png?alt=media&token=a5ea5c7a-799d-4b43-b0c2-e541ab5230d4";
+                } else if (clouds['all'] <= 85) {
+                  //Nu arata foarte bine poate o schimbam
+                  img =
+                      "https://firebasestorage.googleapis.com/v0/b/vib-database.appspot.com/o/clouds.jpg?alt=media&token=8bb38610-8dc5-4a56-827b-c514222b3ff8";
+                } else if (clouds['all'] > 85) {
+                  img =
+                      "https://firebasestorage.googleapis.com/v0/b/vib-database.appspot.com/o/rain.jpg?alt=media&token=018f6aa7-0226-4dda-9fd4-fd6842c52180";
+                }
+                return Container(
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image:
+                                //NU MAI TREBUIE if(){} - if in care verificam cum e vremea ca sa afisam poza de fundal buna
+                                NetworkImage(img))),
+                    child: SafeArea(
+                        child: Obx(() => globalController.checkLoading().isTrue
+                            ? const Center(
+                                child: CircularProgressIndicator(),
+                              )
+                            : ListView(
+                                scrollDirection: Axis.vertical,
+                                children: [
+                                    const SizedBox(height: 20),
+                                    const HeaderWidget(),
+                                    Center(
+                                        child: Text.rich(
+                                            TextSpan(children: <TextSpan>[
+                                      TextSpan(
+                                          text:
+                                              '${'\n'}${'\n'}      ${main['temp'].toInt()}°${'\n'}${'\n'}${'\n'}${'\n'}',
+                                          style: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 80.0,
+                                              fontWeight: FontWeight.bold,
+                                              fontFamily: 'Baloo2')),
+                                      TextSpan(
+                                        text:
+                                            '${'\n'}${'\n'}${'\n'}${'\n'}Air quality:              ${aqi}${'\n'}Wind:                       ${wind['speed'].toInt()}km/h${'\n'}Humidity:                ${main['humidity']}%${'\n'}Clouds:                    ${clouds['all']}%${'\n'}Real feel:                 ${main['feels_like'].toInt()}°',
+                                        style: const TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 30.0,
+                                            fontWeight: FontWeight.bold,
+                                            fontFamily: 'Baloo2'),
+                                      ),
+                                      const TextSpan(
+                                        text:
+                                            '${'\n'}${'\n'}${'\n'}${'\n'}${'\n'}${'\n'}${'\n'}${'\n'}${'\n'}${'\n'}                     ViB | °C',
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 25.0,
+                                            fontWeight: FontWeight.bold,
+                                            fontFamily: 'Baloo2'),
+                                      )
+                                    ])))
+                                  ]))));
+              }
+            }));
   }
 
   Future getData(double lat, double long) async {
