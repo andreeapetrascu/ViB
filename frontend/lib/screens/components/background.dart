@@ -17,7 +17,7 @@ class Background extends StatelessWidget {
           alignment: Alignment.center,
           children: <Widget>[
             Positioned(
-              top: 50,
+              top: 70,
               child: Image.asset(
                 "assets/images/Vib_logo.png",
                 width: size.width * 0.8,

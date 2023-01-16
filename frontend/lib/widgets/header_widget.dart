@@ -36,20 +36,39 @@ class _HeaderWidgetState extends State<HeaderWidget> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
-          margin: const EdgeInsets.only(left: 20, right: 20),
-          alignment: Alignment.topCenter,
-          child: Text(city, style: const TextStyle(fontSize: 30)),
+        Row(
+          children: [
+            const Padding(
+              padding: EdgeInsets.only(left: 50, right: 20),
+            ),
+            const Icon(
+              size: 35,
+              Icons.location_city,
+              color: Colors.black,
+            ),
+            Container(
+              alignment: Alignment.topCenter,
+              child: Text(city,
+                  style: const TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                  )),
+            ),
+          ],
         ),
         Container(
           margin: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
           alignment: Alignment.topCenter,
           child: Text(
             date,
-            style:
-                TextStyle(fontSize: 14, color: Colors.grey[700], height: 1.5),
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.grey[700],
+              height: 1.5,
+              fontWeight: FontWeight.bold,
+            ),
           ),
-        )
+        ),
       ],
     );
   }

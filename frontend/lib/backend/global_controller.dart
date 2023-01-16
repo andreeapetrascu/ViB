@@ -40,8 +40,6 @@ class GlobalController extends GetxController {
     return await Geolocator.getCurrentPosition(
             desiredAccuracy: LocationAccuracy.high)
         .then((value) {
-      print(value.latitude);
-      print(value.longitude);
       _latitude.value = value.latitude;
       _longitude.value = value.longitude;
       _isloading.value = false;
