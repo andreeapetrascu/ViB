@@ -13,6 +13,15 @@ class HelloPage extends StatefulWidget {
 }
 
 class _HelloPageState extends State<HelloPage> {
+  final Map<String, AssetImage> images = {
+    "clear": AssetImage(
+        "https://firebasestorage.googleapis.com/v0/b/vib-database.appspot.com/o/clear.jpg?alt=media&token=7aed2273-c7b7-409a-a53d-c26c5ce148a3"),
+    "cloudy": AssetImage(
+        "https://firebasestorage.googleapis.com/v0/b/vib-database.appspot.com/o/clouds.jpg?alt=media&token=8bb38610-8dc5-4a56-827b-c514222b3ff8"),
+    "rain": AssetImage(
+        "https://firebasestorage.googleapis.com/v0/b/vib-database.appspot.com/o/rain.jpg?alt=media&token=018f6aa7-0226-4dda-9fd4-fd6842c52180")
+  };
+
   final GlobalController globalController =
       Get.put(GlobalController(), permanent: true);
 
@@ -41,11 +50,13 @@ class _HelloPageState extends State<HelloPage> {
               Menu(),
             ]),
         body: Container(
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: NetworkImage(
-                        "https://firebasestorage.googleapis.com/v0/b/vib-database.appspot.com/o/Cer.jpg?alt=media&token=ef761dec-8e2c-4108-9cd9-8fd2b2e4fe56"),
-                    fit: BoxFit.cover)),
+              image:
+                  //if(){} - if in care verificam cum e vremea ca sa afisam poza de fundal buna
+                  NetworkImage(
+                      "https://firebasestorage.googleapis.com/v0/b/vib-database.appspot.com/o/clear.jpg?alt=media&token=7aed2273-c7b7-409a-a53d-c26c5ce148a3"),
+            )),
             child: SafeArea(
                 child: Obx(() => globalController.checkLoading().isTrue
                     ? const Center(

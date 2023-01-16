@@ -16,10 +16,14 @@ class SearchPage extends StatefulWidget {
 var _json;
 const key = "7511aa5b119a0923ca0934b36e04ab4b";
 var text = "";
+var city = "";
+var lat;
+var long;
 double line = 0;
 
 class _SearchPageState extends State<SearchPage> {
   final formKey = GlobalKey<FormState>();
+  final cityController = TextEditingController();
   final GlobalController globalController =
       Get.put(GlobalController(), permanent: true);
 
@@ -27,15 +31,15 @@ class _SearchPageState extends State<SearchPage> {
   // ignore: non_constant_identifier_names
   void search_city() {
     setState(() {
-      confirmationVisible = !confirmationVisible;
+      city = cityController.text.trim();
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final double width = MediaQuery.of(context).size.width;
-    var lat = globalController.getLatitude().value;
-    var long = globalController.getLongitude().value;
+    //final double width = MediaQuery.of(context).size.width;
+    //var lat = globalController.getLatitude().value;
+    //var long = globalController.getLongitude().value;
 
     getData(lat, long);
 
@@ -61,6 +65,7 @@ class _SearchPageState extends State<SearchPage> {
                     const Padding(padding: EdgeInsets.only(bottom: 15.0)),
                     TextFieldContainer(
                         child: TextFormField(
+                            controller: cityController,
                             decoration: InputDecoration(
                                 hintText: "Search...",
                                 hintStyle: const TextStyle(fontSize: 25),
@@ -73,6 +78,18 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   Future getData(double lat, double long) async {
+    var url1 =
+        'http://api.openweathermap.org/geo/1.0/direct?q=$city&limit=5&appid=$key';
+    final uri1 = Uri.parse(url1);
+    final response1 = await http.get(uri1);
+
+    if (response1.statusCode == 200) {
+      _json = json.decode(response1.body);
+    }
+
+    lat = _json['lat'];
+    long = _json['long'];
+
     var url =
         'https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$long&appid=$key&units=metric';
     final uri = Uri.parse(url);
