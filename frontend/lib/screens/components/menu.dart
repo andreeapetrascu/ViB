@@ -16,7 +16,7 @@ class Menu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton<int>(
-      color: Color.fromARGB(123, 156, 128, 255),
+      color: Color.fromARGB(171, 128, 162, 255),
       itemBuilder: (context) => [
         const PopupMenuItem<int>(
             value: 0,

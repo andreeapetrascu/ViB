@@ -123,8 +123,8 @@ class _BodyState extends State<Body> {
                                         ))),
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                           validator: (value) =>
-                              value != null && value.length < 5
-                                  ? 'Enter min. 5 characters'
+                              value != null && value.length < 6
+                                  ? 'Enter min. 6 characters'
                                   : null,
                         ),
                       ),

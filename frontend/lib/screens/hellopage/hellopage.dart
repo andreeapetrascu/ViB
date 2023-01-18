@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:frontend/backend/global_controller.dart';
 import 'package:frontend/screens/components/menu.dart';
@@ -5,6 +7,7 @@ import 'package:frontend/widgets/header_widget.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:frontend/backend/globals.dart' as globals;
 
 class HelloPage extends StatefulWidget {
   const HelloPage({Key? key}) : super(key: key);
@@ -13,18 +16,19 @@ class HelloPage extends StatefulWidget {
 }
 
 class _HelloPageState extends State<HelloPage> {
-  // final Map<String, AssetImage> images = {
-  //   "clear": AssetImage(
-  //       "https://firebasestorage.googleapis.com/v0/b/vib-database.appspot.com/o/clear.jpg?alt=media&token=7aed2273-c7b7-409a-a53d-c26c5ce148a3"),
-  //   "cloudy": AssetImage(
-  //       "https://firebasestorage.googleapis.com/v0/b/vib-database.appspot.com/o/clouds.jpg?alt=media&token=8bb38610-8dc5-4a56-827b-c514222b3ff8"),
-  //   "rain": AssetImage(
-  //       "https://firebasestorage.googleapis.com/v0/b/vib-database.appspot.com/o/rain.jpg?alt=media&token=018f6aa7-0226-4dda-9fd4-fd6842c52180")
-  // };
-
   final GlobalController globalController =
       Get.put(GlobalController(), permanent: true);
 
+  // bool heart = false;
+
+  // void _toggle() {
+  //   setState(() {
+  //     heart = !heart;
+  //   });
+  // }
+
+  var lat;
+  var long;
   var _json;
   var _json_air;
   var desc;
@@ -33,15 +37,21 @@ class _HelloPageState extends State<HelloPage> {
   var clouds;
   var aqi;
   var img;
-  final key = "7511aa5b119a0923ca0934b36e04ab4b";
 
   @override
   Widget build(BuildContext context) {
-    var lat = globalController.getLatitude().value;
-    var long = globalController.getLongitude().value;
+    final double height = MediaQuery.of(context).size.height;
+    final double width = MediaQuery.of(context).size.width;
+    if (globals.lat == 0.0 || globals.long == 0.0) {
+      lat = globalController.getLatitude().value;
+      long = globalController.getLongitude().value;
+    } else {
+      lat = globals.lat;
+      long = globals.long;
+    }
     return Scaffold(
         appBar: AppBar(
-            backgroundColor: Colors.transparent,
+            backgroundColor: const Color.fromARGB(0, 255, 255, 255),
             leading: const BackButton(color: Colors.white),
             actions: const [
               Menu(),
@@ -54,6 +64,21 @@ class _HelloPageState extends State<HelloPage> {
                   child: CircularProgressIndicator(),
                 );
               } else {
+                var readContent = [
+                  "Air quality:          $aqi",
+                  "Wind:                   ${wind['speed'].toInt()}km/h",
+                  "Humidity:            ${main['humidity']}%",
+                  "Clouds:                ${clouds['all']}%",
+                  "Real feel:             ${main['feels_like'].toInt()}°",
+                ];
+                String getNewLineString() {
+                  StringBuffer sb = StringBuffer();
+                  for (String line in readContent) {
+                    sb.write("$line\n");
+                  }
+                  return sb.toString();
+                }
+
                 if (clouds['all'] <= 25) {
                   img =
                       "https://firebasestorage.googleapis.com/v0/b/vib-database.appspot.com/o/clear.jpg?alt=media&token=7aed2273-c7b7-409a-a53d-c26c5ce148a3";
@@ -61,9 +86,8 @@ class _HelloPageState extends State<HelloPage> {
                   img =
                       "https://firebasestorage.googleapis.com/v0/b/vib-database.appspot.com/o/clouds50%25.png?alt=media&token=a5ea5c7a-799d-4b43-b0c2-e541ab5230d4";
                 } else if (clouds['all'] <= 85) {
-                  //Nu arata foarte bine poate o schimbam
                   img =
-                      "https://firebasestorage.googleapis.com/v0/b/vib-database.appspot.com/o/clouds.jpg?alt=media&token=8bb38610-8dc5-4a56-827b-c514222b3ff8";
+                      "https://firebasestorage.googleapis.com/v0/b/vib-database.appspot.com/o/clods85%25.jpg?alt=media&token=dd907469-dfce-4de4-8579-4e60d2442d0a";
                 } else if (clouds['all'] > 85) {
                   img =
                       "https://firebasestorage.googleapis.com/v0/b/vib-database.appspot.com/o/rain.jpg?alt=media&token=018f6aa7-0226-4dda-9fd4-fd6842c52180";
@@ -71,10 +95,9 @@ class _HelloPageState extends State<HelloPage> {
                 return Container(
                     decoration: BoxDecoration(
                         image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image:
-                                //NU MAI TREBUIE if(){} - if in care verificam cum e vremea ca sa afisam poza de fundal buna
-                                NetworkImage(img))),
+                      fit: BoxFit.cover,
+                      image: NetworkImage(img),
+                    )),
                     child: SafeArea(
                         child: Obx(() => globalController.checkLoading().isTrue
                             ? const Center(
@@ -83,38 +106,69 @@ class _HelloPageState extends State<HelloPage> {
                             : ListView(
                                 scrollDirection: Axis.vertical,
                                 children: [
-                                    const SizedBox(height: 20),
-                                    const HeaderWidget(),
-                                    Center(
-                                        child: Text.rich(
-                                            TextSpan(children: <TextSpan>[
-                                      TextSpan(
-                                          text:
-                                              '${'\n'}${'\n'}      ${main['temp'].toInt()}°${'\n'}${'\n'}${'\n'}${'\n'}',
-                                          style: const TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 80.0,
-                                              fontWeight: FontWeight.bold,
-                                              fontFamily: 'Baloo2')),
-                                      TextSpan(
-                                        text:
-                                            '${'\n'}${'\n'}${'\n'}${'\n'}Air quality:              ${aqi}${'\n'}Wind:                       ${wind['speed'].toInt()}km/h${'\n'}Humidity:                ${main['humidity']}%${'\n'}Clouds:                    ${clouds['all']}%${'\n'}Real feel:                 ${main['feels_like'].toInt()}°',
+                                    const SizedBox(height: 30),
+                                    Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: const [
+                                          HeaderWidget(),
+
+                                          // IconButton(
+                                          //   onPressed: _toggle,
+                                          //   icon: heart
+                                          //       ? const Icon(
+                                          //           Icons.favorite,
+                                          //           color: Color.fromARGB(
+                                          //               255, 106, 1, 155),
+                                          //           size: 50,
+                                          //         )
+                                          //       : const Icon(
+                                          //           Icons
+                                          //               .favorite_border_outlined,
+                                          //           color: Color.fromARGB(
+                                          //               255, 106, 1, 155),
+                                          //           size: 50,
+                                          //         ),
+                                          // ),
+                                        ]),
+                                    SizedBox(
+                                      height: height * 0.03,
+                                    ),
+                                    Text("${main['temp'].toInt()}°",
+                                        textAlign: TextAlign.center,
                                         style: const TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 30.0,
+                                            fontSize: 60.0,
                                             fontWeight: FontWeight.bold,
-                                            fontFamily: 'Baloo2'),
-                                      ),
-                                      const TextSpan(
-                                        text:
-                                            '${'\n'}${'\n'}${'\n'}${'\n'}${'\n'}${'\n'}${'\n'}${'\n'}${'\n'}${'\n'}                     ViB | °C',
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 25.0,
-                                            fontWeight: FontWeight.bold,
-                                            fontFamily: 'Baloo2'),
-                                      )
-                                    ])))
+                                            color: Colors.white)),
+                                    SizedBox(
+                                      height: height * 0.16,
+                                    ),
+                                    Center(
+                                        child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            mainAxisSize: MainAxisSize.max,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.end,
+                                            children: [
+                                          Text(
+                                            getNewLineString(),
+                                            maxLines: 5,
+                                            style: const TextStyle(
+                                                fontSize: 35.0,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.white),
+                                          ),
+                                          SizedBox(
+                                            height: height * 0.17,
+                                          ),
+                                          const Text("ViB | °C",
+                                              style: TextStyle(
+                                                  fontSize: 25.0,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.white)),
+                                        ]))
                                   ]))));
               }
             }));
@@ -122,7 +176,7 @@ class _HelloPageState extends State<HelloPage> {
 
   Future getData(double lat, double long) async {
     var url =
-        'https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$long&appid=$key&units=metric';
+        'https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$long&appid=${globals.key}&units=metric';
     final uri = Uri.parse(url);
     final response = await http.get(uri);
 
@@ -135,7 +189,7 @@ class _HelloPageState extends State<HelloPage> {
     clouds = _json['clouds'];
 
     var url_air =
-        'http://api.openweathermap.org/data/2.5/air_pollution?lat=$lat&lon=$long&appid=$key';
+        'http://api.openweathermap.org/data/2.5/air_pollution?lat=$lat&lon=$long&appid=${globals.key}';
     final uri_air = Uri.parse(url_air);
     final response_air = await http.get(uri_air);
 

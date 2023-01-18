@@ -68,7 +68,6 @@ class _BodyState extends State<Body> {
         child: TextField(
           controller: passwordController,
           obscureText: !passwordVisible,
-          //onChanged: onChanged,
           decoration: InputDecoration(
             hintText: "Password",
             icon: const Icon(

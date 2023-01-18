@@ -1,15 +1,11 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/backend/global_controller.dart';
 import 'package:frontend/screens/components/menu.dart';
-import 'package:frontend/screens/hellopage/hellopage.dart';
-import 'package:frontend/screens/hourly/hourly_page.dart';
-import 'package:frontend/screens/daily/daily_page.dart';
-import 'package:frontend/screens/login/login_screen.dart';
 import 'package:frontend/widgets/town.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:frontend/backend/globals.dart' as globals;
 
 class AllergiesPage extends StatefulWidget {
   const AllergiesPage({Key? key}) : super(key: key);
@@ -31,7 +27,7 @@ class _AllergiesPageState extends State<AllergiesPage> {
     final double width = MediaQuery.of(context).size.width;
     var lat = globalController.getLatitude().value;
     var long = globalController.getLongitude().value;
-
+    Color color;
     getData(lat, long);
 
     return Scaffold(
@@ -112,6 +108,7 @@ class _AllergiesPageState extends State<AllergiesPage> {
                                                       if (i == 0) {
                                                         if (true) {
                                                           line = 0.6;
+                                                          color = Colors.red;
                                                         }
                                                         return Column(
                                                             crossAxisAlignment:
@@ -154,15 +151,13 @@ class _AllergiesPageState extends State<AllergiesPage> {
                                                                     top: 30,
                                                                     bottom: 30,
                                                                   ),
-                                                                  child:
-                                                                      Container(
-                                                                    height: 5.0,
-                                                                    width:
-                                                                        width *
-                                                                            line,
-                                                                    color: Colors
-                                                                        .black,
-                                                                  )),
+                                                                  child: Container(
+                                                                      height:
+                                                                          5.0,
+                                                                      width: width *
+                                                                          line,
+                                                                      color:
+                                                                          color)),
                                                               const Text("Low",
                                                                   style:
                                                                       TextStyle(

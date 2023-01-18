@@ -5,6 +5,7 @@ import 'package:frontend/widgets/town.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:frontend/backend/globals.dart' as globals;
 
 class HourlyPage extends StatefulWidget {
   const HourlyPage({Key? key}) : super(key: key);
@@ -19,6 +20,7 @@ class _HourlyPageState extends State<HourlyPage> {
   var _json;
   var main;
   var clouds;
+  var img;
 
   var ora1 = "";
   var ora2 = "";
@@ -46,8 +48,6 @@ class _HourlyPageState extends State<HourlyPage> {
   var temp11;
   var temp12;
 
-  final key = "7511aa5b119a0923ca0934b36e04ab4b";
-
   @override
   Widget build(BuildContext context) {
     var lat = globalController.getLatitude().value;
@@ -60,69 +60,130 @@ class _HourlyPageState extends State<HourlyPage> {
             actions: const [
               Menu(),
             ]),
-        body: Container(
-            decoration: const BoxDecoration(
-                image: DecorationImage(
-                    image: NetworkImage(
-                        "https://firebasestorage.googleapis.com/v0/b/vib-database.appspot.com/o/Cer.jpg?alt=media&token=ef761dec-8e2c-4108-9cd9-8fd2b2e4fe56"),
-                    fit: BoxFit.cover)),
-            child: SafeArea(
-                child: Obx(() => globalController.checkLoading().isTrue
-                    ? const Center(
-                        child: CircularProgressIndicator(),
-                      )
-                    : ListView(scrollDirection: Axis.vertical, children: [
-                        const SizedBox(
-                          height: 40,
-                        ),
-                        const TownWidget(),
-                        FutureBuilder(
-                            future: getData(lat, long),
-                            builder:
-                                (BuildContext context, AsyncSnapshot snapshot) {
-                              if (!snapshot.hasData) {
-                                return const Center(
-                                  child: CircularProgressIndicator(),
-                                );
-                              } else {
-                                return Center(
-                                    child:
-                                        Text.rich(TextSpan(children: <TextSpan>[
-                                  TextSpan(
-                                    text:
-                                        '${'\n'}${'\n'}        ${main.toInt()}°${'\n'}${'\n'}',
-                                    style: const TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 60.0,
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: 'Baloo2'),
-                                  ),
-                                  TextSpan(
-                                    text:
-                                        '${'\n'}${'\n'}$ora1:00                              ${temp1.toInt()}°${'\n'}$ora2:00                              ${temp2.toInt()}°${'\n'}$ora3:00                              ${temp3.toInt()}°${'\n'}$ora4:00                              ${temp4.toInt()}°${'\n'}$ora5:00                              ${temp5.toInt()}°${'\n'}$ora6:00                              ${temp6.toInt()}°${'\n'}$ora7:00                              ${temp7.toInt()}°${'\n'}$ora8:00                              ${temp8.toInt()}°${'\n'}$ora9:00                              ${temp9.toInt()}°${'\n'}$ora10:00                              ${temp10.toInt()}°${'\n'}$ora11:00                              ${temp11.toInt()}°${'\n'}$ora12:00                              ${temp12.toInt()}°${'\n'}',
-                                    style: const TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 29.0,
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: 'Baloo2'),
-                                  ),
-                                  const TextSpan(
-                                    text: '${'\n'}                    ViB | °C',
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 25.0,
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: 'Baloo2'),
-                                  )
-                                ])));
-                              }
-                            })
-                      ])))));
+        body: FutureBuilder(
+            future: getData(lat, long),
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              if (!snapshot.hasData) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else {
+                var readContent = [
+                  "$ora1:00                           ${temp1.toInt()}°",
+                  "$ora2:00                           ${temp2.toInt()}°",
+                  "$ora3:00                           ${temp3.toInt()}°",
+                  "$ora4:00                           ${temp4.toInt()}°",
+                  "$ora5:00                           ${temp5.toInt()}°",
+                  "$ora6:00                           ${temp6.toInt()}°",
+                  "$ora7:00                           ${temp7.toInt()}°",
+                  "$ora8:00                           ${temp8.toInt()}°",
+                  "$ora9:00                           ${temp9.toInt()}°",
+                  "$ora10:00                           ${temp10.toInt()}°",
+                  "$ora11:00                           ${temp11.toInt()}°",
+                  "$ora12:00                           ${temp12.toInt()}°",
+                ];
+                String getNewLineString() {
+                  StringBuffer sb = StringBuffer();
+                  for (String line in readContent) {
+                    sb.write("$line\n");
+                  }
+                  return sb.toString();
+                }
+
+                if (clouds <= 25) {
+                  img =
+                      "https://firebasestorage.googleapis.com/v0/b/vib-database.appspot.com/o/clear.jpg?alt=media&token=7aed2273-c7b7-409a-a53d-c26c5ce148a3";
+                } else if (clouds <= 50) {
+                  img =
+                      "https://firebasestorage.googleapis.com/v0/b/vib-database.appspot.com/o/clouds50%25.png?alt=media&token=a5ea5c7a-799d-4b43-b0c2-e541ab5230d4";
+                } else if (clouds <= 85) {
+                  img =
+                      "https://firebasestorage.googleapis.com/v0/b/vib-database.appspot.com/o/clods85%25.jpg?alt=media&token=dd907469-dfce-4de4-8579-4e60d2442d0a";
+                } else if (clouds > 85) {
+                  img =
+                      "https://firebasestorage.googleapis.com/v0/b/vib-database.appspot.com/o/rain.jpg?alt=media&token=018f6aa7-0226-4dda-9fd4-fd6842c52180";
+                }
+                return Container(
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: NetworkImage(img),
+                    )),
+                    child: SafeArea(
+                        child: Obx(() => globalController.checkLoading().isTrue
+                            ? const Center(
+                                child: CircularProgressIndicator(),
+                              )
+                            : ListView(
+                                scrollDirection: Axis.vertical,
+                                children: [
+                                    const SizedBox(
+                                      height: 30,
+                                    ),
+                                    const TownWidget(),
+                                    const SizedBox(
+                                      height: 30,
+                                    ),
+                                    Text("${main.toInt()}°",
+                                        textAlign: TextAlign.center,
+                                        style: const TextStyle(
+                                            fontSize: 50.0,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white)),
+                                    const SizedBox(
+                                      height: 30,
+                                    ),
+                                    FutureBuilder(
+                                        future: getData(lat, long),
+                                        builder: (BuildContext context,
+                                            AsyncSnapshot snapshot) {
+                                          if (!snapshot.hasData) {
+                                            return const Center(
+                                              child:
+                                                  CircularProgressIndicator(),
+                                            );
+                                          } else {
+                                            return Center(
+                                                child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .center,
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.end,
+                                                    children: [
+                                                  Text(
+                                                    getNewLineString(),
+                                                    maxLines: 12,
+                                                    style: const TextStyle(
+                                                        fontSize: 30.0,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors.white),
+                                                  ),
+                                                  const SizedBox(
+                                                    height: 50,
+                                                  ),
+                                                  const Text("ViB | °C",
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style: TextStyle(
+                                                          fontSize: 25.0,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.white)),
+                                                ]));
+                                          }
+                                        })
+                                  ]))));
+              }
+            }));
   }
 
   Future getData(double lat, double long) async {
     var url =
-        'https://pro.openweathermap.org/data/2.5/forecast/hourly?lat=$lat&lon=$long&appid=$key&units=metric';
+        'https://pro.openweathermap.org/data/2.5/forecast/hourly?lat=$lat&lon=$long&appid=${globals.key}&units=metric';
     final uri = Uri.parse(url);
     final response = await http.get(uri);
 

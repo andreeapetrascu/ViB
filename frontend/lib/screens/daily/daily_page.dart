@@ -1,14 +1,12 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/backend/global_controller.dart';
-import 'package:frontend/screens/allergies/allergies_page.dart';
-import 'package:frontend/screens/hellopage/hellopage.dart';
-import 'package:frontend/screens/hourly/hourly_page.dart';
-import 'package:frontend/screens/login/login_screen.dart';
+import 'package:frontend/screens/components/menu.dart';
 import 'package:frontend/widgets/header_widget.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:frontend/backend/globals.dart' as globals;
+import 'package:intl/intl.dart';
 
 class DailyPage extends StatefulWidget {
   const DailyPage({Key? key}) : super(key: key);
@@ -22,68 +20,30 @@ class _DailyPageState extends State<DailyPage> {
 
   var _json;
   var _json_air;
-
-  final key = "7511aa5b119a0923ca0934b36e04ab4b";
+  var lat;
+  var long;
+  var dt;
 
   @override
   Widget build(BuildContext context) {
-    var lat = globalController.getLatitude().value;
-    var long = globalController.getLongitude().value;
+    if (globals.lat == 0.0 || globals.long == 0.0) {
+      lat = globalController.getLatitude().value;
+      long = globalController.getLongitude().value;
+    } else {
+      lat = globals.lat;
+      long = globals.long;
+    }
 
     getData(lat, long);
 
     //final user = FirebaseAuth.instance.currentUser!;
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          leading: const BackButton(color: Colors.white),
-          actions: [
-            PopupMenuButton<int>(
-              itemBuilder: (context) => [
-                const PopupMenuItem<int>(
-                  value: 0,
-                  child: Text("Home"),
-                ),
-                const PopupMenuDivider(),
-                const PopupMenuItem<int>(
-                  value: 1,
-                  child: Text("Hourly"),
-                ),
-                const PopupMenuDivider(),
-                const PopupMenuItem<int>(
-                  value: 2,
-                  child: Text("Daily"),
-                ),
-                const PopupMenuDivider(),
-                const PopupMenuItem<int>(
-                  value: 3,
-                  child: Text("Favorites"),
-                ),
-                const PopupMenuDivider(),
-                const PopupMenuItem<int>(
-                  value: 4,
-                  child: Text("Other Info"),
-                ),
-                const PopupMenuDivider(),
-                PopupMenuItem<int>(
-                    value: 5,
-                    child: Row(
-                      children: const [
-                        SizedBox(
-                          width: 7,
-                        ),
-                        Text("Logout"),
-                        Icon(
-                          Icons.logout_rounded,
-                          color: Colors.black,
-                        ),
-                      ],
-                    )),
-              ],
-              onSelected: (item) => SelectedItem(context, item),
-            )
-          ],
-        ),
+            backgroundColor: Colors.transparent,
+            leading: const BackButton(color: Colors.white),
+            actions: const [
+              Menu(),
+            ]),
         body: Container(
             decoration: const BoxDecoration(
                 image: DecorationImage(
@@ -138,45 +98,21 @@ class _DailyPageState extends State<DailyPage> {
                       ])))));
   }
 
-  SelectedItem(BuildContext context, int item) {
-    switch (item) {
-      case 0:
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => const HelloPage()));
-        break;
-      case 1:
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => const HourlyPage()));
-        break;
-      case 2:
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => const DailyPage()));
-        break;
-      case 3:
-        print("merge 3!");
-        break;
-      case 4:
-        Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => const AllergiesPage()));
-        break;
-      case 5:
-        FirebaseAuth.instance.signOut();
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => const LoginScreen()));
-        break;
-    }
-  }
-
   Future getData(double lat, double long) async {
     var url =
-        'https://api.openweathermap.org/data/2.5/forecast/daily?lat=$lat&lon=$long&cnt=7&appid=$key&units=metric';
-
+        'https://api.openweathermap.org/data/2.5/forecast/daily?lat=${globals.lat}&lon=${globals.long}&cnt=7&appid=${globals.key}&units=metric';
     final uri = Uri.parse(url);
     final response = await http.get(uri);
 
     if (response.statusCode == 200) {
       _json = json.decode(response.body);
     }
+    var aux = _json['list'];
+    var aaa = aux[0];
+    dt = aaa['dt'];
+    final df = new DateFormat('dd-MM-yyyy hh:mm a');
+    print(dt);
+    print(df.format(new DateTime.fromMillisecondsSinceEpoch(dt * 1000)));
 
     return 1;
   }
