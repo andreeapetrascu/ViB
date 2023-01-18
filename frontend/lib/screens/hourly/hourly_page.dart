@@ -21,6 +21,8 @@ class _HourlyPageState extends State<HourlyPage> {
   var main;
   var clouds;
   var img;
+  var lat;
+  var long;
 
   var ora1 = "";
   var ora2 = "";
@@ -50,8 +52,13 @@ class _HourlyPageState extends State<HourlyPage> {
 
   @override
   Widget build(BuildContext context) {
-    var lat = globalController.getLatitude().value;
-    var long = globalController.getLongitude().value;
+    if (globals.lat == 0.0 || globals.long == 0.0) {
+      lat = globalController.getLatitude().value;
+      long = globalController.getLongitude().value;
+    } else {
+      lat = globals.lat;
+      long = globals.long;
+    }
     getData(lat, long);
     return Scaffold(
         appBar: AppBar(

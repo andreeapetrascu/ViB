@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/backend/global_controller.dart';
 import 'package:frontend/screens/components/menu.dart';
-import 'package:frontend/widgets/header_widget.dart';
+import 'package:frontend/widgets/town.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -22,7 +22,21 @@ class _DailyPageState extends State<DailyPage> {
   var _json_air;
   var lat;
   var long;
-  var dt;
+  var day1;
+  var day2;
+  var day3;
+  var day4;
+  var day5;
+  var day6;
+  var day7;
+
+  var temp1;
+  var temp2;
+  var temp3;
+  var temp4;
+  var temp5;
+  var temp6;
+  var temp7;
 
   @override
   Widget build(BuildContext context) {
@@ -44,63 +58,303 @@ class _DailyPageState extends State<DailyPage> {
             actions: const [
               Menu(),
             ]),
-        body: Container(
-            decoration: const BoxDecoration(
-                image: DecorationImage(
-                    image: NetworkImage(
-                        "https://firebasestorage.googleapis.com/v0/b/vib-database.appspot.com/o/Cer.jpg?alt=media&token=ef761dec-8e2c-4108-9cd9-8fd2b2e4fe56"),
-                    fit: BoxFit.cover)),
-            child: SafeArea(
-                child: Obx(() => globalController.checkLoading().isTrue
-                    ? const Center(
-                        child: CircularProgressIndicator(),
-                      )
-                    : ListView(scrollDirection: Axis.vertical, children: [
-                        const SizedBox(height: 20),
-                        const HeaderWidget(),
-                        FutureBuilder(
-                            future: getData(lat, long),
-                            builder:
-                                (BuildContext context, AsyncSnapshot snapshot) {
-                              if (!snapshot.hasData) {
-                                return const Center(
-                                  child: CircularProgressIndicator(),
-                                );
-                              } else {
-                                return const Center(
-                                    child:
-                                        Text.rich(TextSpan(children: <TextSpan>[
-                                  TextSpan(
-                                      text:
-                                          '${'\n'}${'\n'}      ${'\n'}${'\n'}${'\n'}${'\n'}',
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 80.0,
-                                          fontFamily: 'Baloo2')),
-                                  TextSpan(
-                                    text: '${'\n'}${'\n'}${'\n'}${'\n'}°',
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 30.0,
-                                        fontFamily: 'Baloo2'),
-                                  ),
-                                  TextSpan(
-                                    text:
-                                        '${'\n'}${'\n'}${'\n'}${'\n'}${'\n'}${'\n'}${'\n'}${'\n'}${'\n'}${'\n'}                     ViB | °C',
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 25.0,
-                                        fontFamily: 'Baloo2'),
-                                  )
-                                ])));
-                              }
-                            })
-                      ])))));
+        body: FutureBuilder(
+            future: getData(lat, long),
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              if (!snapshot.hasData) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else {
+                var readContent = [
+                  "$day1                 ${temp1.toInt()}°",
+                  "$day2                 ${temp2.toInt()}°",
+                  "$day3                 ${temp3.toInt()}°",
+                  "$day4                 ${temp4.toInt()}°",
+                  "$day5                 ${temp5.toInt()}°",
+                  "$day6                 ${temp6.toInt()}°",
+                  "$day7                 ${temp7.toInt()}°"
+                ];
+                String getNewLineString() {
+                  StringBuffer sb = StringBuffer();
+                  for (String line in readContent) {
+                    sb.write("$line\n");
+                  }
+                  return sb.toString();
+                }
+
+                return SafeArea(
+                    child: Obx(() => globalController.checkLoading().isTrue
+                        ? const Center(
+                            child: CircularProgressIndicator(),
+                          )
+                        : ListView(scrollDirection: Axis.vertical, children: [
+                            const SizedBox(height: 20),
+                            const TownWidget(),
+                            const SizedBox(height: 20),
+                            Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          day1,
+                                          style: const TextStyle(
+                                              fontSize: 35.0,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white),
+                                        )
+                                      ],
+                                    ),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        Text(
+                                          '${temp1.toInt()}°',
+                                          style: const TextStyle(
+                                              fontSize: 35.0,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white),
+                                        )
+                                      ],
+                                    )
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          day2,
+                                          style: const TextStyle(
+                                              fontSize: 35.0,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white),
+                                        )
+                                      ],
+                                    ),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        Text(
+                                          '${temp2.toInt()}°',
+                                          style: const TextStyle(
+                                              fontSize: 35.0,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white),
+                                        )
+                                      ],
+                                    )
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          day3,
+                                          style: const TextStyle(
+                                              fontSize: 35.0,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white),
+                                        )
+                                      ],
+                                    ),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        Text(
+                                          '${temp3.toInt()}°',
+                                          style: const TextStyle(
+                                              fontSize: 35.0,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white),
+                                        )
+                                      ],
+                                    )
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          day4,
+                                          style: const TextStyle(
+                                              fontSize: 35.0,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white),
+                                        )
+                                      ],
+                                    ),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        Text(
+                                          '${temp4.toInt()}°',
+                                          style: const TextStyle(
+                                              fontSize: 35.0,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white),
+                                        )
+                                      ],
+                                    )
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          day5,
+                                          style: const TextStyle(
+                                              fontSize: 35.0,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white),
+                                        )
+                                      ],
+                                    ),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        Text(
+                                          '${temp5.toInt()}°',
+                                          style: const TextStyle(
+                                              fontSize: 35.0,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white),
+                                        )
+                                      ],
+                                    )
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          day6,
+                                          style: const TextStyle(
+                                              fontSize: 35.0,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white),
+                                        )
+                                      ],
+                                    ),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        Text(
+                                          '${temp6.toInt()}°',
+                                          style: const TextStyle(
+                                              fontSize: 35.0,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white),
+                                        )
+                                      ],
+                                    )
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          day7,
+                                          style: const TextStyle(
+                                              fontSize: 35.0,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white),
+                                        )
+                                      ],
+                                    ),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        Text(
+                                          '${temp7.toInt()}°',
+                                          style: const TextStyle(
+                                              fontSize: 35.0,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white),
+                                        )
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ],
+                            ),
+                            const Text("ViB | °C",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontSize: 25.0,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white)),
+                          ])));
+              }
+            }));
   }
 
   Future getData(double lat, double long) async {
     var url =
-        'https://api.openweathermap.org/data/2.5/forecast/daily?lat=${globals.lat}&lon=${globals.long}&cnt=7&appid=${globals.key}&units=metric';
+        'https://api.openweathermap.org/data/2.5/forecast/daily?lat=$lat&lon=$long&cnt=7&appid=${globals.key}&units=metric';
     final uri = Uri.parse(url);
     final response = await http.get(uri);
 
@@ -109,11 +363,61 @@ class _DailyPageState extends State<DailyPage> {
     }
     var aux = _json['list'];
     var aaa = aux[0];
-    dt = aaa['dt'];
-    final df = new DateFormat('dd-MM-yyyy hh:mm a');
-    print(dt);
-    print(df.format(new DateTime.fromMillisecondsSinceEpoch(dt * 1000)));
+    day1 = aaa['dt'];
+    var temp = aaa['temp'];
+    temp1 = temp['day'];
+    final df = DateFormat('yyyy-MM-dd');
+    day1 = df.format(DateTime.fromMillisecondsSinceEpoch(day1 * 1000));
+    DateTime dt_bun = DateTime.parse(day1);
+    day1 = DateFormat('EEEE').format(dt_bun);
 
+    aaa = aux[1];
+    day2 = aaa['dt'];
+    temp = aaa['temp'];
+    temp2 = temp['day'];
+    day2 = df.format(DateTime.fromMillisecondsSinceEpoch(day2 * 1000));
+    dt_bun = DateTime.parse(day2);
+    day2 = DateFormat('EEEE').format(dt_bun);
+
+    aaa = aux[2];
+    day3 = aaa['dt'];
+    temp = aaa['temp'];
+    temp3 = temp['day'];
+    day3 = df.format(DateTime.fromMillisecondsSinceEpoch(day3 * 1000));
+    dt_bun = DateTime.parse(day3);
+    day3 = DateFormat('EEEE').format(dt_bun);
+
+    aaa = aux[3];
+    day4 = aaa['dt'];
+    temp = aaa['temp'];
+    temp4 = temp['day'];
+    day4 = df.format(DateTime.fromMillisecondsSinceEpoch(day4 * 1000));
+    dt_bun = DateTime.parse(day4);
+    day4 = DateFormat('EEEE').format(dt_bun);
+
+    aaa = aux[4];
+    day5 = aaa['dt'];
+    temp = aaa['temp'];
+    temp5 = temp['day'];
+    day5 = df.format(DateTime.fromMillisecondsSinceEpoch(day5 * 1000));
+    dt_bun = DateTime.parse(day5);
+    day5 = DateFormat('EEEE').format(dt_bun);
+
+    aaa = aux[5];
+    day6 = aaa['dt'];
+    temp = aaa['temp'];
+    temp6 = temp['day'];
+    day6 = df.format(DateTime.fromMillisecondsSinceEpoch(day6 * 1000));
+    dt_bun = DateTime.parse(day6);
+    day6 = DateFormat('EEEE').format(dt_bun);
+
+    aaa = aux[6];
+    day7 = aaa['dt'];
+    temp = aaa['temp'];
+    temp7 = temp['day'];
+    day7 = df.format(DateTime.fromMillisecondsSinceEpoch(day7 * 1000));
+    dt_bun = DateTime.parse(day7);
+    day7 = DateFormat('EEEE').format(dt_bun);
     return 1;
   }
 }
