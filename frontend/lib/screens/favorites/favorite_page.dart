@@ -47,7 +47,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                       )
                     : ListView(scrollDirection: Axis.vertical, children: [
                         const SizedBox(height: 20),
-                        const HeaderWidget(),
+                        //const HeaderWidget(heart: false,),
                         FutureBuilder(
                             future: getData(lat, long),
                             builder:

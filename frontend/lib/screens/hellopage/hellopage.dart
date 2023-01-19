@@ -1,5 +1,6 @@
-import 'dart:ui';
-
+import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/backend/global_controller.dart';
 import 'package:frontend/screens/components/menu.dart';
@@ -18,15 +19,9 @@ class HelloPage extends StatefulWidget {
 class _HelloPageState extends State<HelloPage> {
   final GlobalController globalController =
       Get.put(GlobalController(), permanent: true);
+  final user = FirebaseAuth.instance.currentUser!;
 
-  // bool heart = false;
-
-  // void _toggle() {
-  //   setState(() {
-  //     heart = !heart;
-  //   });
-  // }
-
+  @override
   var lat;
   var long;
   var _json;
@@ -37,6 +32,26 @@ class _HelloPageState extends State<HelloPage> {
   var clouds;
   var aqi;
   var img;
+  var city;
+  late bool heart = false;
+
+  getFavorite() async {
+    await FirebaseFirestore.instance
+        .collection('favorites')
+        .doc(user.uid)
+        .collection('favorites')
+        .get()
+        .then((QuerySnapshot querySnapshot) => {
+              querySnapshot.docs.forEach((doc) {
+                if (city == doc['city']) {
+                  heart = true;
+                  print(doc["city"]);
+                  print(city);
+                  print(heart);
+                }
+              })
+            });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +64,9 @@ class _HelloPageState extends State<HelloPage> {
       lat = globals.lat;
       long = globals.long;
     }
+    // getFavorite();
+    // print(city);
+    // print(heart);
     return Scaffold(
         appBar: AppBar(
             backgroundColor: const Color.fromARGB(0, 255, 255, 255),
@@ -92,6 +110,7 @@ class _HelloPageState extends State<HelloPage> {
                   img =
                       "https://firebasestorage.googleapis.com/v0/b/vib-database.appspot.com/o/rain.jpg?alt=media&token=018f6aa7-0226-4dda-9fd4-fd6842c52180";
                 }
+
                 return Container(
                     decoration: BoxDecoration(
                         image: DecorationImage(
@@ -111,26 +130,10 @@ class _HelloPageState extends State<HelloPage> {
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
-                                        children: const [
-                                          HeaderWidget(),
-
-                                          // IconButton(
-                                          //   onPressed: _toggle,
-                                          //   icon: heart
-                                          //       ? const Icon(
-                                          //           Icons.favorite,
-                                          //           color: Color.fromARGB(
-                                          //               255, 106, 1, 155),
-                                          //           size: 50,
-                                          //         )
-                                          //       : const Icon(
-                                          //           Icons
-                                          //               .favorite_border_outlined,
-                                          //           color: Color.fromARGB(
-                                          //               255, 106, 1, 155),
-                                          //           size: 50,
-                                          //         ),
-                                          // ),
+                                        children: [
+                                          HeaderWidget(
+                                            heart: heart,
+                                          ),
                                         ]),
                                     SizedBox(
                                       height: height * 0.03,
@@ -187,6 +190,7 @@ class _HelloPageState extends State<HelloPage> {
     main = _json['main'];
     wind = _json['wind'];
     clouds = _json['clouds'];
+    city = _json['name'];
 
     var url_air =
         'http://api.openweathermap.org/data/2.5/air_pollution?lat=$lat&lon=$long&appid=${globals.key}';
