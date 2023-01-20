@@ -4,6 +4,7 @@ import 'package:frontend/backend/utils.dart';
 import 'package:frontend/components/already_have_an_account_check.dart';
 import 'package:frontend/components/roundedbutton.dart';
 import 'package:frontend/components/text_field_container.dart';
+import 'package:frontend/screens/hellopage/hellopage.dart';
 import 'package:frontend/screens/home/components/home_screen.dart';
 import 'package:frontend/screens/components/background.dart';
 import 'package:frontend/screens/singup/singup_screen.dart';
@@ -105,6 +106,12 @@ class _BodyState extends State<Body> {
           } on FirebaseAuthException catch (e) {
             Utils.showSnackBar(e.message);
           }
+          // ignore: use_build_context_synchronously
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                  builder: (BuildContext context) => const HelloPage()),
+              (Route<dynamic> route) => route is Homescreen);
         },
       ),
       SizedBox(

@@ -40,6 +40,8 @@ class _DailyPageState extends State<DailyPage> {
 
   @override
   Widget build(BuildContext context) {
+    final double height = MediaQuery.of(context).size.height;
+    final double width = MediaQuery.of(context).size.width;
     if (globals.lat == 0.0 || globals.long == 0.0) {
       lat = globalController.getLatitude().value;
       long = globalController.getLongitude().value;
@@ -89,258 +91,214 @@ class _DailyPageState extends State<DailyPage> {
                             child: CircularProgressIndicator(),
                           )
                         : ListView(scrollDirection: Axis.vertical, children: [
-                            const SizedBox(height: 20),
+                            SizedBox(height: height * 0.07),
                             const TownWidget(),
-                            const SizedBox(height: 20),
-                            Column(
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          day1,
-                                          style: const TextStyle(
-                                              fontSize: 35.0,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.white),
-                                        )
-                                      ],
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.end,
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        Text(
-                                          '${temp1.toInt()}°',
-                                          style: const TextStyle(
-                                              fontSize: 35.0,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.white),
-                                        )
-                                      ],
-                                    )
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          day2,
-                                          style: const TextStyle(
-                                              fontSize: 35.0,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.white),
-                                        )
-                                      ],
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.end,
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        Text(
-                                          '${temp2.toInt()}°',
-                                          style: const TextStyle(
-                                              fontSize: 35.0,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.white),
-                                        )
-                                      ],
-                                    )
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          day3,
-                                          style: const TextStyle(
-                                              fontSize: 35.0,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.white),
-                                        )
-                                      ],
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.end,
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        Text(
-                                          '${temp3.toInt()}°',
-                                          style: const TextStyle(
-                                              fontSize: 35.0,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.white),
-                                        )
-                                      ],
-                                    )
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          day4,
-                                          style: const TextStyle(
-                                              fontSize: 35.0,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.white),
-                                        )
-                                      ],
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.end,
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        Text(
-                                          '${temp4.toInt()}°',
-                                          style: const TextStyle(
-                                              fontSize: 35.0,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.white),
-                                        )
-                                      ],
-                                    )
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          day5,
-                                          style: const TextStyle(
-                                              fontSize: 35.0,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.white),
-                                        )
-                                      ],
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.end,
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        Text(
-                                          '${temp5.toInt()}°',
-                                          style: const TextStyle(
-                                              fontSize: 35.0,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.white),
-                                        )
-                                      ],
-                                    )
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          day6,
-                                          style: const TextStyle(
-                                              fontSize: 35.0,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.white),
-                                        )
-                                      ],
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.end,
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        Text(
-                                          '${temp6.toInt()}°',
-                                          style: const TextStyle(
-                                              fontSize: 35.0,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.white),
-                                        )
-                                      ],
-                                    )
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          day7,
-                                          style: const TextStyle(
-                                              fontSize: 35.0,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.white),
-                                        )
-                                      ],
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.end,
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        Text(
-                                          '${temp7.toInt()}°',
-                                          style: const TextStyle(
-                                              fontSize: 35.0,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.white),
-                                        )
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              ],
+                            SizedBox(height: height * 0.15),
+                            Container(
+                              margin:
+                                  const EdgeInsets.symmetric(horizontal: 30.0),
+                              child: Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Column(
+                                        children: [
+                                          Text(
+                                            day1,
+                                            style: const TextStyle(
+                                                fontSize: 35.0,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.white),
+                                          )
+                                        ],
+                                      ),
+                                      Column(
+                                        children: [
+                                          Text(
+                                            '${temp1.toInt()}°',
+                                            style: const TextStyle(
+                                                fontSize: 35.0,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.white),
+                                          )
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Column(
+                                        children: [
+                                          Text(
+                                            day2,
+                                            style: const TextStyle(
+                                                fontSize: 35.0,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.white),
+                                          )
+                                        ],
+                                      ),
+                                      Column(
+                                        children: [
+                                          Text(
+                                            '${temp2.toInt()}°',
+                                            style: const TextStyle(
+                                                fontSize: 35.0,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.white),
+                                          )
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Column(
+                                        children: [
+                                          Text(
+                                            day3,
+                                            style: const TextStyle(
+                                                fontSize: 35.0,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.white),
+                                          )
+                                        ],
+                                      ),
+                                      Column(
+                                        children: [
+                                          Text(
+                                            '${temp3.toInt()}°',
+                                            style: const TextStyle(
+                                                fontSize: 35.0,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.white),
+                                          )
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Column(
+                                        children: [
+                                          Text(
+                                            day4,
+                                            style: const TextStyle(
+                                                fontSize: 35.0,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.white),
+                                          )
+                                        ],
+                                      ),
+                                      Column(
+                                        children: [
+                                          Text(
+                                            '${temp4.toInt()}°',
+                                            style: const TextStyle(
+                                                fontSize: 35.0,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.white),
+                                          )
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Column(
+                                        children: [
+                                          Text(
+                                            day5,
+                                            style: const TextStyle(
+                                                fontSize: 35.0,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.white),
+                                          )
+                                        ],
+                                      ),
+                                      Column(
+                                        children: [
+                                          Text(
+                                            '${temp5.toInt()}°',
+                                            style: const TextStyle(
+                                                fontSize: 35.0,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.white),
+                                          )
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Column(
+                                        children: [
+                                          Text(
+                                            day6,
+                                            style: const TextStyle(
+                                                fontSize: 35.0,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.white),
+                                          )
+                                        ],
+                                      ),
+                                      Column(
+                                        children: [
+                                          Text(
+                                            '${temp6.toInt()}°',
+                                            style: const TextStyle(
+                                                fontSize: 35.0,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.white),
+                                          )
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Column(
+                                        children: [
+                                          Text(
+                                            day7,
+                                            style: const TextStyle(
+                                                fontSize: 35.0,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.white),
+                                          )
+                                        ],
+                                      ),
+                                      Column(
+                                        children: [
+                                          Text(
+                                            '${temp7.toInt()}°',
+                                            style: const TextStyle(
+                                                fontSize: 35.0,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.white),
+                                          )
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
+                            SizedBox(height: height * 0.2),
                             const Text("ViB | °C",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(

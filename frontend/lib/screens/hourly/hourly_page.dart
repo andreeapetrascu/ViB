@@ -52,6 +52,7 @@ class _HourlyPageState extends State<HourlyPage> {
 
   @override
   Widget build(BuildContext context) {
+    final double height = MediaQuery.of(context).size.height;
     if (globals.lat == 0.0 || globals.long == 0.0) {
       lat = globalController.getLatitude().value;
       long = globalController.getLongitude().value;
@@ -124,12 +125,12 @@ class _HourlyPageState extends State<HourlyPage> {
                             : ListView(
                                 scrollDirection: Axis.vertical,
                                 children: [
-                                    const SizedBox(
-                                      height: 30,
+                                    SizedBox(
+                                      height: height * 0.04,
                                     ),
                                     const TownWidget(),
-                                    const SizedBox(
-                                      height: 30,
+                                    SizedBox(
+                                      height: height * 0.04,
                                     ),
                                     Text("${main.toInt()}°",
                                         textAlign: TextAlign.center,
@@ -137,8 +138,8 @@ class _HourlyPageState extends State<HourlyPage> {
                                             fontSize: 50.0,
                                             fontWeight: FontWeight.bold,
                                             color: Colors.white)),
-                                    const SizedBox(
-                                      height: 30,
+                                    SizedBox(
+                                      height: height * 0.04,
                                     ),
                                     FutureBuilder(
                                         future: getData(lat, long),
@@ -169,8 +170,8 @@ class _HourlyPageState extends State<HourlyPage> {
                                                             FontWeight.bold,
                                                         color: Colors.white),
                                                   ),
-                                                  const SizedBox(
-                                                    height: 50,
+                                                  SizedBox(
+                                                    height: height * 0.06,
                                                   ),
                                                   const Text("ViB | °C",
                                                       textAlign:

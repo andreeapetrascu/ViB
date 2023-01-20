@@ -22,6 +22,12 @@ class _HelloPageState extends State<HelloPage> {
   final user = FirebaseAuth.instance.currentUser!;
 
   @override
+  void initState() {
+    getFavorite();
+    super.initState();
+  }
+
+  @override
   var lat;
   var long;
   var _json;
@@ -45,9 +51,7 @@ class _HelloPageState extends State<HelloPage> {
               querySnapshot.docs.forEach((doc) {
                 if (city == doc['city']) {
                   heart = true;
-                  print(doc["city"]);
-                  print(city);
-                  print(heart);
+                  return;
                 }
               })
             });
@@ -64,9 +68,6 @@ class _HelloPageState extends State<HelloPage> {
       lat = globals.lat;
       long = globals.long;
     }
-    // getFavorite();
-    // print(city);
-    // print(heart);
     return Scaffold(
         appBar: AppBar(
             backgroundColor: const Color.fromARGB(0, 255, 255, 255),
@@ -110,7 +111,6 @@ class _HelloPageState extends State<HelloPage> {
                   img =
                       "https://firebasestorage.googleapis.com/v0/b/vib-database.appspot.com/o/rain.jpg?alt=media&token=018f6aa7-0226-4dda-9fd4-fd6842c52180";
                 }
-
                 return Container(
                     decoration: BoxDecoration(
                         image: DecorationImage(
@@ -125,7 +125,7 @@ class _HelloPageState extends State<HelloPage> {
                             : ListView(
                                 scrollDirection: Axis.vertical,
                                 children: [
-                                    const SizedBox(height: 30),
+                                    SizedBox(height: height * 0.05),
                                     Row(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
@@ -191,6 +191,7 @@ class _HelloPageState extends State<HelloPage> {
     wind = _json['wind'];
     clouds = _json['clouds'];
     city = _json['name'];
+    getFavorite();
 
     var url_air =
         'http://api.openweathermap.org/data/2.5/air_pollution?lat=$lat&lon=$long&appid=${globals.key}';
