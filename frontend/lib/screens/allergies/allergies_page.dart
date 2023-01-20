@@ -553,11 +553,11 @@ class _AllergiesPageState extends State<AllergiesPage> {
                                                 (context, constraints) {
                                               if (i == 0) {
                                                 if (run == "Excellent") {
-                                                  line = 0.15;
+                                                  line = 0.75;
                                                   color = const Color.fromARGB(
                                                       255, 16, 95, 22);
                                                 } else if (run == "Very Good") {
-                                                  line = 0.3;
+                                                  line = 0.60;
                                                   color = const Color.fromARGB(
                                                       255, 55, 236, 79);
                                                 } else if (run == "Good") {
@@ -565,11 +565,11 @@ class _AllergiesPageState extends State<AllergiesPage> {
                                                   color = const Color.fromARGB(
                                                       255, 236, 233, 78);
                                                 } else if (run == "Fair") {
-                                                  line = 0.60;
+                                                  line = 0.30;
                                                   color = const Color.fromARGB(
                                                       255, 236, 152, 42);
                                                 } else if (run == "Poor") {
-                                                  line = 0.75;
+                                                  line = 0.15;
                                                   color = const Color.fromARGB(
                                                       255, 224, 38, 25);
                                                 }
@@ -628,12 +628,12 @@ class _AllergiesPageState extends State<AllergiesPage> {
                                                     ]);
                                               } else if (i == 1) {
                                                 if (cycling == "Excellent") {
-                                                  line = 0.15;
+                                                  line = 0.75;
                                                   color = const Color.fromARGB(
                                                       255, 16, 95, 22);
                                                 } else if (cycling ==
                                                     "Very Good") {
-                                                  line = 0.3;
+                                                  line = 0.60;
                                                   color = const Color.fromARGB(
                                                       255, 55, 236, 79);
                                                 } else if (cycling == "Good") {
@@ -641,11 +641,11 @@ class _AllergiesPageState extends State<AllergiesPage> {
                                                   color = const Color.fromARGB(
                                                       255, 236, 233, 78);
                                                 } else if (cycling == "Fair") {
-                                                  line = 0.60;
+                                                  line = 0.30;
                                                   color = const Color.fromARGB(
                                                       255, 236, 152, 42);
                                                 } else if (cycling == "Poor") {
-                                                  line = 0.75;
+                                                  line = 0.15;
                                                   color = const Color.fromARGB(
                                                       255, 224, 38, 25);
                                                 }
@@ -704,12 +704,12 @@ class _AllergiesPageState extends State<AllergiesPage> {
                                                     ]);
                                               } else if (i == 2) {
                                                 if (pool == "Excellent") {
-                                                  line = 0.15;
+                                                  line = 0.75;
                                                   color = const Color.fromARGB(
                                                       255, 16, 95, 22);
                                                 } else if (pool ==
                                                     "Very Good") {
-                                                  line = 0.3;
+                                                  line = 0.60;
                                                   color = const Color.fromARGB(
                                                       255, 55, 236, 79);
                                                 } else if (pool == "Good") {
@@ -717,11 +717,11 @@ class _AllergiesPageState extends State<AllergiesPage> {
                                                   color = const Color.fromARGB(
                                                       255, 236, 233, 78);
                                                 } else if (pool == "Fair") {
-                                                  line = 0.60;
+                                                  line = 0.30;
                                                   color = const Color.fromARGB(
                                                       255, 236, 152, 42);
                                                 } else if (pool == "Poor") {
-                                                  line = 0.75;
+                                                  line = 0.15;
                                                   color = const Color.fromARGB(
                                                       255, 224, 38, 25);
                                                 }
@@ -780,11 +780,11 @@ class _AllergiesPageState extends State<AllergiesPage> {
                                                     ]);
                                               } else if (i == 3) {
                                                 if (ski == "Excellent") {
-                                                  line = 0.15;
+                                                  line = 0.75;
                                                   color = const Color.fromARGB(
                                                       255, 16, 95, 22);
                                                 } else if (ski == "Very Good") {
-                                                  line = 0.3;
+                                                  line = 0.60;
                                                   color = const Color.fromARGB(
                                                       255, 55, 236, 79);
                                                 } else if (ski == "Good") {
@@ -792,11 +792,11 @@ class _AllergiesPageState extends State<AllergiesPage> {
                                                   color = const Color.fromARGB(
                                                       255, 236, 233, 78);
                                                 } else if (ski == "Fair") {
-                                                  line = 0.60;
+                                                  line = 0.30;
                                                   color = const Color.fromARGB(
                                                       255, 236, 152, 42);
                                                 } else if (ski == "Poor") {
-                                                  line = 0.75;
+                                                  line = 0.15;
                                                   color = const Color.fromARGB(
                                                       255, 224, 38, 25);
                                                 }

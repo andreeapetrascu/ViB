@@ -51,8 +51,6 @@ class _FavoritesPageState extends State<FavoritesPage> {
     final df = DateFormat('HH:mm');
     var ora = df.format(DateTime.fromMillisecondsSinceEpoch(dt * 1000));
     main = main['temp'].toInt().toString();
-    //print(ora);
-    //print(temp);
     return [ora, main];
   }
 
@@ -62,12 +60,8 @@ class _FavoritesPageState extends State<FavoritesPage> {
 
   @override
   Widget build(BuildContext context) {
-    var lat = globalController.getLatitude().value;
-    var long = globalController.getLongitude().value;
     final double height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
-
-    getData(lat, long);
 
     return Scaffold(
         appBar: AppBar(
@@ -85,163 +79,114 @@ class _FavoritesPageState extends State<FavoritesPage> {
                     SizedBox(
                       height: height * 0.1,
                     ),
-                    FutureBuilder(
-                        future: getData(lat, long),
-                        builder:
-                            (BuildContext context, AsyncSnapshot snapshot) {
-                          if (!snapshot.hasData) {
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          } else {
-                            return Container(
-                                margin:
-                                    const EdgeInsets.symmetric(vertical: 20.0),
-                                child: Column(children: [
-                                  Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: const [
-                                        Text("Favorites",
-                                            style: TextStyle(
-                                              fontSize: 50,
-                                              fontWeight: FontWeight.bold,
-                                              color: Color.fromARGB(
-                                                  255, 151, 141, 241),
-                                            )),
-                                        Icon(
-                                          Icons.favorite,
-                                          color: Color.fromARGB(
-                                              255, 151, 141, 241),
-                                          size: 50,
-                                        )
-                                      ]),
-                                  SizedBox(
-                                    height: height * 0.1,
-                                  ),
-                                  StreamBuilder<QuerySnapshot>(
-                                      stream: FirebaseFirestore.instance
-                                          .collection('favorites')
-                                          .doc(user.uid)
-                                          .collection('favorites')
-                                          .snapshots(),
-                                      builder: (BuildContext context,
-                                          AsyncSnapshot<QuerySnapshot>
-                                              snapshot) {
-                                        if (!snapshot.hasData) {
-                                          return const Center(
-                                            child: CircularProgressIndicator(),
-                                          );
-                                        } else {
-                                          return Container(
-                                            margin: const EdgeInsets.symmetric(
-                                                horizontal: 20.0),
-                                            height: height * 0.9,
-                                            child: ListView(
-                                              shrinkWrap: true,
-                                              scrollDirection: Axis.vertical,
-                                              children: snapshot.data!.docs
-                                                  .map((snap) {
-                                                print(snap['city']);
-                                                getDatas(snap['city']).then(
-                                                  (value) {
-                                                    ora = value[0];
-                                                    temp = value[1];
-                                                    print(temp);
-                                                  },
-                                                );
-                                                return Column(children: [
-                                                  Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      Column(
-                                                        children: [
-                                                          Text(snap['city'],
-                                                              style:
-                                                                  const TextStyle(
-                                                                fontSize: 30,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Color
-                                                                    .fromARGB(
-                                                                        255,
-                                                                        151,
-                                                                        141,
-                                                                        241),
-                                                              ))
-                                                        ],
-                                                      ),
-                                                      Column(
-                                                        children: [
-                                                          Text("$ora",
-                                                              style:
-                                                                  const TextStyle(
-                                                                fontSize: 30,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Color
-                                                                    .fromARGB(
-                                                                        255,
-                                                                        151,
-                                                                        141,
-                                                                        241),
-                                                              ))
-                                                        ],
-                                                      ),
-                                                      Column(
-                                                        children: [
-                                                          Text(" $temp°",
-                                                              style:
-                                                                  const TextStyle(
-                                                                fontSize: 30,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Color
-                                                                    .fromARGB(
-                                                                        255,
-                                                                        151,
-                                                                        141,
-                                                                        241),
-                                                              ))
-                                                        ],
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  SizedBox(
-                                                    height: height * 0.03,
-                                                  ),
-                                                ]);
-                                              }).toList(),
-                                            ),
-                                          );
-                                        }
-                                      }),
-                                  const Text("ViB | °C",
-                                      style: TextStyle(
-                                          fontSize: 25.0,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white)),
-                                ]));
-                          }
-                        }),
+                    Container(
+                        margin: const EdgeInsets.symmetric(vertical: 20.0),
+                        child: Column(children: [
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: const [
+                                Text("Favorites",
+                                    style: TextStyle(
+                                      fontSize: 50,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color.fromARGB(255, 151, 141, 241),
+                                    )),
+                                Icon(
+                                  Icons.favorite,
+                                  color: Color.fromARGB(255, 151, 141, 241),
+                                  size: 50,
+                                )
+                              ]),
+                          SizedBox(
+                            height: height * 0.1,
+                          ),
+                          StreamBuilder<QuerySnapshot>(
+                              stream: FirebaseFirestore.instance
+                                  .collection('favorites')
+                                  .doc(user.uid)
+                                  .collection('favorites')
+                                  .snapshots(),
+                              builder: (BuildContext context,
+                                  AsyncSnapshot<QuerySnapshot> snapshot) {
+                                if (!snapshot.hasData) {
+                                  return const Center(
+                                    child: CircularProgressIndicator(),
+                                  );
+                                } else {
+                                  return Container(
+                                    margin: const EdgeInsets.symmetric(
+                                        horizontal: 20.0),
+                                    height: height * 0.9,
+                                    child: ListView(
+                                      shrinkWrap: true,
+                                      scrollDirection: Axis.vertical,
+                                      children: snapshot.data!.docs.map((snap) {
+                                        print(snap['city']);
+                                        getDatas(snap['city']).then(
+                                          (value) {
+                                            ora = value[0];
+                                            temp = value[1];
+                                            print(temp);
+                                          },
+                                        );
+                                        return Column(children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Column(
+                                                children: [
+                                                  Text(snap['city'],
+                                                      style: const TextStyle(
+                                                        fontSize: 30,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Color.fromARGB(
+                                                            255, 151, 141, 241),
+                                                      ))
+                                                ],
+                                              ),
+                                              Column(
+                                                children: [
+                                                  Text("$ora",
+                                                      style: const TextStyle(
+                                                        fontSize: 30,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Color.fromARGB(
+                                                            255, 151, 141, 241),
+                                                      ))
+                                                ],
+                                              ),
+                                              Column(
+                                                children: [
+                                                  Text(" $temp°",
+                                                      style: const TextStyle(
+                                                        fontSize: 30,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Color.fromARGB(
+                                                            255, 151, 141, 241),
+                                                      ))
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                          SizedBox(
+                                            height: height * 0.03,
+                                          ),
+                                        ]);
+                                      }).toList(),
+                                    ),
+                                  );
+                                }
+                              }),
+                          const Text("ViB | °C",
+                              style: TextStyle(
+                                  fontSize: 25.0,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white)),
+                        ]))
                   ]))));
-  }
-
-  Future getData(double lat, double long) async {
-    var url =
-        'https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$long&appid=${globals.key}&units=metric';
-    final uri = Uri.parse(url);
-    final response = await http.get(uri);
-
-    if (response.statusCode == 200) {
-      _json = json.decode(response.body);
-    }
-
-    return 1;
   }
 }
