@@ -51,6 +51,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
     final df = DateFormat('HH:mm');
     var ora = df.format(DateTime.fromMillisecondsSinceEpoch(dt * 1000));
     main = main['temp'].toInt().toString();
+    temp = main;
     return [ora, main];
   }
 
@@ -129,53 +130,84 @@ class _FavoritesPageState extends State<FavoritesPage> {
                                             print(temp);
                                           },
                                         );
-                                        return Column(children: [
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Column(
-                                                children: [
-                                                  Text(snap['city'],
-                                                      style: const TextStyle(
-                                                        fontSize: 30,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        color: Color.fromARGB(
-                                                            255, 151, 141, 241),
-                                                      ))
-                                                ],
-                                              ),
-                                              Column(
-                                                children: [
-                                                  Text("$ora",
-                                                      style: const TextStyle(
-                                                        fontSize: 30,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        color: Color.fromARGB(
-                                                            255, 151, 141, 241),
-                                                      ))
-                                                ],
-                                              ),
-                                              Column(
-                                                children: [
-                                                  Text(" $temp°",
-                                                      style: const TextStyle(
-                                                        fontSize: 30,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        color: Color.fromARGB(
-                                                            255, 151, 141, 241),
-                                                      ))
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            height: height * 0.03,
-                                          ),
-                                        ]);
+                                        return FutureBuilder(
+                                            future: getDatas(snap['city']),
+                                            builder: (BuildContext context,
+                                                AsyncSnapshot snapshot) {
+                                              if (!snapshot.hasData) {
+                                                return const Center(
+                                                  child:
+                                                      CircularProgressIndicator(),
+                                                );
+                                              } else {
+                                                return Column(children: [
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Column(
+                                                        children: [
+                                                          Text(snap['city'],
+                                                              style:
+                                                                  const TextStyle(
+                                                                fontSize: 30,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color: Color
+                                                                    .fromARGB(
+                                                                        255,
+                                                                        151,
+                                                                        141,
+                                                                        241),
+                                                              ))
+                                                        ],
+                                                      ),
+                                                      Column(
+                                                        children: [
+                                                          Text("$ora",
+                                                              style:
+                                                                  const TextStyle(
+                                                                fontSize: 30,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color: Color
+                                                                    .fromARGB(
+                                                                        255,
+                                                                        151,
+                                                                        141,
+                                                                        241),
+                                                              ))
+                                                        ],
+                                                      ),
+                                                      Column(
+                                                        children: [
+                                                          Text(" $temp°",
+                                                              style:
+                                                                  const TextStyle(
+                                                                fontSize: 30,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color: Color
+                                                                    .fromARGB(
+                                                                        255,
+                                                                        151,
+                                                                        141,
+                                                                        241),
+                                                              ))
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  SizedBox(
+                                                    height: height * 0.03,
+                                                  ),
+                                                ]);
+                                              }
+                                            });
                                       }).toList(),
                                     ),
                                   );
